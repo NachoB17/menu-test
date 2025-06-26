@@ -171,7 +171,7 @@
       });
     }
     function fetchCSVAndRender() {
-      Papa.parse('menu.csv', {
+      Papa.parse('https://docs.google.com/spreadsheets/d/1tWm1Ch7iycf7pGVawSKC70mOhHiiWMe0pRhFLaPckdw/export?format=csv&gid=0', {
         download: true,
         header: true,
         complete: function(results) {
