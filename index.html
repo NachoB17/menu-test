@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu – Maison Fleurie</title>
+  <style>
+    /* style minimal et responsive */
+    html,body{margin:0;padding:0;height:100%;font-family:system-ui,sans-serif;background:#fdfdfd;}
+    iframe{border:0;width:100%;height:100vh;}
+    .fallback{padding:1rem;text-align:center;font-size:1rem;}
+    .fallback a{color:#0070f3;text-decoration:none;font-weight:600;}
+  </style>
+</head>
+<body>
+  <!-- Le PDF du menu doit se trouver dans le même dossier et s’appeler menu.pdf -->
+  <iframe src="menu.pdf" title="Menu PDF de Maison Fleurie" loading="lazy"></iframe>
+  <p class="fallback">Si le menu ne s’affiche pas, <a href="menu.pdf" target="_blank" rel="noopener">cliquez ici pour le télécharger</a>.</p>
+
+  <!-- Google Analytics 4 : remplacez G-XXXXXXXXXX par votre ID (facultatif) -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+</body>
+</html>
