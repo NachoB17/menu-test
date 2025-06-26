@@ -50,7 +50,7 @@
     @media (max-width: 600px) { .pdf-viewer { height: 90vh; min-height: 320px; } }
     /* Titres sections */
     .section-title {
-      color: #2c5530; font-size: 1.45rem; font-weight: 400; margin: 2.1rem 0 0.7rem 0;
+      color: #2c5530; font-size: 1.7rem; font-weight: 400; margin: 2.1rem 0 0.7rem 0;
       border-bottom: 2px solid #e9ecef; letter-spacing: 1px;
       font-family: 'Viaoda Libre', serif;
     }
@@ -63,13 +63,15 @@
     }
     .item-info { flex: 1; margin-right: 1rem; }
     .item-name {
-      font-weight: 700; color: #212529; margin-bottom: 0.22rem;
-      font-family: 'Viaoda Libre', serif;
-      font-size: 1.19rem;
+      font-family: Arial, sans-serif;
+      font-size: 1.13rem;
+      font-weight: bold;
+      color: #212529;
+      margin-bottom: 0.22rem;
       letter-spacing: .1px;
     }
     .item-description {
-      color: #6c757d; font-size: 0.96rem; font-family: Arial, sans-serif;
+      color: #6c757d; font-size: 0.97rem; font-family: Arial, sans-serif;
       margin-top: 2px;
     }
     .item-price { color: #2c5530; font-weight: 700; font-size: 1.09rem; flex-shrink: 0; font-family: Arial, sans-serif;}
@@ -111,6 +113,13 @@
   <!-- PapaParse pour le CSV -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
+    // Utilitaire pour normaliser nom d'onglet (sans accent, minuscule)
+    function normalizeOnglet(s) {
+      return (s || "")
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "");
+    }
     function showTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -118,6 +127,7 @@
       event.target.classList.add('active');
     }
     function renderCSVMenu(csvRows) {
+      // map tab keys to DOM ids
       const tabs = {
         deguster: document.getElementById('deguster'),
         cocktails: document.getElementById('cocktails'),
@@ -126,17 +136,17 @@
         softs: document.getElementById('softs'),
         vins: document.getElementById('vins')
       };
-      // On vide tout
+      // Vide tout
       for (const tab in tabs) tabs[tab].innerHTML = "";
-      // On groupe par section dans chaque onglet
+      // Regroupe par section dans chaque onglet (normalisé)
       const data = {};
       csvRows.forEach(row => {
-        const onglet = (row.Onglet || '').toLowerCase();
-        if (!tabs[onglet]) return;
-        if (!data[onglet]) data[onglet] = {};
+        const ongletNorm = normalizeOnglet(row.Onglet);
+        if (!tabs[ongletNorm]) return;
+        if (!data[ongletNorm]) data[ongletNorm] = {};
         const section = row.Section || '';
-        if (!data[onglet][section]) data[onglet][section] = [];
-        data[onglet][section].push(row);
+        if (!data[ongletNorm][section]) data[ongletNorm][section] = [];
+        data[ongletNorm][section].push(row);
       });
       Object.keys(tabs).forEach(tabKey => {
         const tab = tabs[tabKey];
