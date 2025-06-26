@@ -2,251 +2,55 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menu – Maison Fleurie</title>
-  <meta name="description" content="Découvrez notre carte : fromages, plats terre et mer, cocktails signatures et vins sélectionnés." />
-  
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset et base */
-    * { box-sizing: border-box; }
-    html, body { 
-      margin: 0; 
-      padding: 0; 
-      height: 100%; 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Quicksand', Arial, sans-serif;
       background: #f8f9fa;
-      overflow-x: hidden;
     }
-
-    /* Header avec logo */
     .header {
       background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
-      color: white;
-      padding: 1rem;
+      color: white; padding: 1rem;
       text-align: center;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    
-    .header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      font-weight: 300;
-      letter-spacing: 2px;
-    }
-    
-    .header p {
-      margin: 0.5rem 0 0 0;
-      opacity: 0.9;
-      font-size: 0.9rem;
-    }
-
-    /* Container principal */
-    .container {
-      max-width: 100%;
-      margin: 0;
-      background: white;
-      min-height: calc(100vh - 120px);
-    }
-
-    /* Navigation par onglets */
+    .header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; }
+    .header p { margin: 0.3rem 0 0 0; opacity: 0.9; font-size: 1.05rem; }
     .tab-nav {
-      display: flex;
-      background: white;
-      border-bottom: 1px solid #e9ecef;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      display: flex; background: white; border-bottom: 1px solid #e9ecef;
+      overflow-x: auto; position: sticky; top: 0; z-index: 100;
     }
-    
     .tab-btn {
-      flex: 1;
-      min-width: 120px;
-      padding: 1rem 0.5rem;
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #6c757d;
-      transition: all 0.3s ease;
-      white-space: nowrap;
+      flex: 1; min-width: 120px; padding: 1rem 0.5rem; border: none;
+      background: none; cursor: pointer; font-size: 1rem;
+      font-weight: 700; color: #6c757d; transition: all 0.2s;
     }
-    
     .tab-btn.active {
-      color: #2c5530;
-      border-bottom: 3px solid #2c5530;
-      background: #f8f9fa;
+      color: #2c5530; border-bottom: 3px solid #2c5530; background: #f8f9fa;
     }
-
-    /* Contenu des onglets */
-    .tab-content {
-      display: none;
-      padding: 1.5rem;
-      animation: fadeIn 0.3s ease-in;
-    }
-    
-    .tab-content.active {
-      display: block;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Sections menu */
-    .menu-section {
-      margin-bottom: 2rem;
-    }
-    
+    .tab-content { display: none; padding: 1.2rem 1rem; }
+    .tab-content.active { display: block; }
+    .pdf-container { width: 100vw; max-width: 100vw; background: white; border-radius: 8px; overflow: hidden; margin: 0 auto; }
+    .pdf-viewer { width: 100vw; height: 80vh; min-height: 400px; border: none; display: block; }
+    @media (max-width: 600px) { .pdf-viewer { height: 90vh; min-height: 320px; } }
     .section-title {
-      color: #2c5530;
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e9ecef;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: #2c5530; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.7rem;
+      border-bottom: 2px solid #e9ecef; letter-spacing: 1px;
+      font-family: 'Quicksand', Arial, sans-serif;
     }
-
-    /* Items du menu */
     .menu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 1rem 0;
-      border-bottom: 1px solid #f1f3f4;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 0.7rem 0; border-bottom: 1px solid #f1f3f4;
+      font-size: 1.05rem;
     }
-    
-    .menu-item:last-child {
-      border-bottom: none;
-    }
-    
-    .item-info {
-      flex: 1;
-      margin-right: 1rem;
-    }
-    
-    .item-name {
-      font-weight: 600;
-      color: #212529;
-      margin-bottom: 0.3rem;
-      font-size: 1rem;
-      line-height: 1.3;
-    }
-    
-    .item-description {
-      color: #6c757d;
-      font-size: 0.85rem;
-      line-height: 1.4;
-    }
-    
-    .item-price {
-      color: #2c5530;
-      font-weight: 700;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    /* Vins avec colonnes prix */
-    .wine-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid #f1f3f4;
-    }
-    
-    .wine-info {
-      flex: 1;
-      margin-right: 1rem;
-    }
-    
-    .wine-prices {
-      display: flex;
-      gap: 1rem;
-      flex-shrink: 0;
-      font-weight: 600;
-      color: #2c5530;
-    }
-    
-    .price-label {
-      font-size: 0.8rem;
-      color: #6c757d;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    /* PDF Viewer amélioré */
-    .pdf-container {
-      position: relative;
-      width: 100%;
-      min-height: 80vh;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    .pdf-viewer {
-      width: 100%;
-      height: 80vh;
-      border: none;
-    }
-    
-    .pdf-fallback {
-      padding: 2rem;
-      text-align: center;
-      background: #f8f9fa;
-    }
-    
-    .pdf-fallback a {
-      display: inline-block;
-      background: #2c5530;
-      color: white;
-      padding: 1rem 2rem;
-      text-decoration: none;
-      border-radius: 25px;
-      font-weight: 600;
-      transition: background 0.3s ease;
-    }
-    
-    .pdf-fallback a:hover {
-      background: #1e3a21;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .header h1 { font-size: 1.5rem; }
-      .tab-btn { font-size: 0.8rem; padding: 0.8rem 0.3rem; }
-      .tab-content { padding: 1rem; }
-      .section-title { font-size: 1.2rem; }
-      .wine-prices { flex-direction: column; gap: 0.5rem; align-items: center; }
-    }
-
-    /* Loading animation */
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 200px;
-      color: #6c757d;
-    }
-    
-    .spinner {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #2c5530;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-      margin-right: 1rem;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    .item-info { flex: 1; margin-right: 1rem; }
+    .item-name { font-weight: 700; color: #212529; margin-bottom: 0.3rem; }
+    .item-description { color: #6c757d; font-size: 0.95rem; }
+    .item-price { color: #2c5530; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }
+    .csv-error { color: #e74c3c; text-align: center; padding: 1em; }
   </style>
 </head>
 <body>
@@ -254,267 +58,101 @@
     <h1>MAISON FLEURIE</h1>
     <p>Table des Mets • Cocktails • Vins</p>
   </div>
-
   <div class="container">
-    <!-- Navigation onglets -->
     <div class="tab-nav">
-      <button class="tab-btn active" onclick="showTab('pdf')">📄 Menu Complet</button>
-      <button class="tab-btn" onclick="showTab('food')">🍽️ Carte</button>
-      <button class="tab-btn" onclick="showTab('drinks')">🍸 Cocktails</button>
+      <button class="tab-btn active" onclick="showTab('pdf')">📄 Menu PDF</button>
+      <button class="tab-btn" onclick="showTab('deguster')">🍽️ Déguster</button>
+      <button class="tab-btn" onclick="showTab('cocktails')">🍸 Cocktails</button>
+      <button class="tab-btn" onclick="showTab('hotdrinks')">☕ Boissons chaudes</button>
+      <button class="tab-btn" onclick="showTab('beers')">🍺 Bières pression & bouteilles</button>
       <button class="tab-btn" onclick="showTab('wines')">🍷 Vins</button>
     </div>
-
     <!-- Onglet PDF -->
     <div id="pdf" class="tab-content active">
       <div class="pdf-container">
-        <iframe src="menu.pdf" class="pdf-viewer" title="Menu PDF de Maison Fleurie" loading="lazy"></iframe>
+        <iframe src="menu.pdf" class="pdf-viewer" title="Menu PDF Maison Fleurie"></iframe>
       </div>
-      <div class="pdf-fallback" style="margin-top: 1rem;">
-        <p style="margin-bottom: 1rem;">Le PDF ne s'affiche pas correctement ?</p>
-        <a href="menu.pdf" target="_blank">📱 Télécharger le menu PDF</a>
-      </div>
-    </div>
-
-    <!-- Onglet Nourriture -->
-    <div id="food" class="tab-content">
-      <div class="menu-section">
-        <h2 class="section-title">Fromages</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Cantal éclats de noix au miel</div>
-          </div>
-          <div class="item-price">9€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Chèvre aux herbes</div>
-            <div class="item-description">huile verte</div>
-          </div>
-          <div class="item-price">7€</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <h2 class="section-title">Terre</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Karage poulet</div>
-            <div class="item-description">Mayo wasabi, Teriyaki whisky</div>
-          </div>
-          <div class="item-price">11€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Mortadelle de Bologne</div>
-            <div class="item-description">pistache, confiture figues piment</div>
-          </div>
-          <div class="item-price">12€</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <h2 class="section-title">Mer</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Couteaux en persillade</div>
-            <div class="item-description">x10 pièces</div>
-          </div>
-          <div class="item-price">15€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Aile de raie et choux fleurs rôtie</div>
-            <div class="item-description">en persillade</div>
-          </div>
-          <div class="item-price">10€</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <h2 class="section-title">Veggie</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Artichauts rôtis</div>
-            <div class="item-description">crème de chèvre aux herbes</div>
-          </div>
-          <div class="item-price">8€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Hummus betterave</div>
-            <div class="item-description">frites patate douce sauce maison</div>
-          </div>
-          <div class="item-price">14€</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <h2 class="section-title">Dessert</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Mousse choco maison</div>
-          </div>
-          <div class="item-price">7€</div>
-        </div>
+      <div style="text-align:center; margin:1rem;">
+        <a href="menu.pdf" target="_blank" style="color:#2c5530; font-weight:bold; text-decoration:underline;">Télécharger le menu PDF</a>
       </div>
     </div>
-
-    <!-- Onglet Cocktails -->
-    <div id="drinks" class="tab-content">
-      <div class="menu-section">
-        <h2 class="section-title">Signatures</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Creamy pistachio</div>
-            <div class="item-description">vodka espresso, crème de pistache</div>
-          </div>
-          <div class="item-price">12€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Red/White Sangria Sour</div>
-          </div>
-          <div class="item-price">11€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Spicy Margarita</div>
-            <div class="item-description">tequila infusée piment vert et rouge du Maroc</div>
-          </div>
-          <div class="item-price">12€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Green Smash</div>
-            <div class="item-description">gin infusé au persil, basilic, citron vert</div>
-          </div>
-          <div class="item-price">12€</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <h2 class="section-title">Classiques</h2>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Mules</div>
-            <div class="item-description">Caribbean Rhum / Moscow Vodka / London Gin / Mexican Mezcal (+2€)</div>
-          </div>
-          <div class="item-price">10€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Sour</div>
-            <div class="item-description">amaretto, bourbon, whisky, pisco</div>
-          </div>
-          <div class="item-price">11€</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Spritz</div>
-            <div class="item-description">Aperol / Limoncello / Campari, Sureau Hugo</div>
-          </div>
-          <div class="item-price">10€</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Onglet Vins -->
-    <div id="wines" class="tab-content">
-      <div class="menu-section">
-        <h2 class="section-title">Vins au Verre</h2>
-        <div class="price-label">
-          <span style="margin-right: 2rem;">12.5cl</span>
-          <span>75cl</span>
-        </div>
-        
-        <h3 style="color: #2c5530; margin: 1.5rem 0 1rem 0;">Rouge</h3>
-        <div class="wine-item">
-          <div class="wine-info">
-            <div class="item-name">Shebam 2023</div>
-            <div class="item-description">Château la Dournie, grenache vieille vigne IGP Pays d'Hérault</div>
-          </div>
-          <div class="wine-prices">
-            <span>5€</span>
-            <span>28€</span>
-          </div>
-        </div>
-        
-        <h3 style="color: #2c5530; margin: 1.5rem 0 1rem 0;">Blanc</h3>
-        <div class="wine-item">
-          <div class="wine-info">
-            <div class="item-name">Déesse Muettes 2023</div>
-            <div class="item-description">IGP Saint Guilhem le Désert, viognier</div>
-          </div>
-          <div class="wine-prices">
-            <span>5€</span>
-            <span>28€</span>
-          </div>
-        </div>
-        
-        <h3 style="color: #2c5530; margin: 1.5rem 0 1rem 0;">Rosé</h3>
-        <div class="wine-item">
-          <div class="wine-info">
-            <div class="item-name">Grain de Glace 2024</div>
-            <div class="item-description">AOP Côte de Provence, grenache, cinsault, syrah, rolle</div>
-          </div>
-          <div class="wine-prices">
-            <span>5€</span>
-            <span>28€</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Contenus dynamiques (via CSV) -->
+    <div id="deguster" class="tab-content"></div>
+    <div id="cocktails" class="tab-content"></div>
+    <div id="hotdrinks" class="tab-content"></div>
+    <div id="beers" class="tab-content"></div>
+    <div id="wines" class="tab-content"></div>
   </div>
-
+  <!-- Papaparse for CSV reading -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
     function showTab(tabName) {
-      // Cacher tous les contenus
-      const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(content => content.classList.remove('active'));
-      
-      // Désactiver tous les boutons
-      const buttons = document.querySelectorAll('.tab-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      
-      // Activer le contenu et bouton sélectionnés
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabName).classList.add('active');
       event.target.classList.add('active');
-      
-      // Analytics (optionnel)
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'tab_view', {
-          'tab_name': tabName
+    }
+    // Load CSV and fill tabs
+    function renderCSVMenu(csvRows) {
+      // Catégories par onglet
+      const tabs = {
+        deguster: document.getElementById('deguster'),
+        cocktails: document.getElementById('cocktails'),
+        hotdrinks: document.getElementById('hotdrinks'),
+        beers: document.getElementById('beers'),
+        wines: document.getElementById('wines')
+      };
+      // Vide tout avant d’injecter
+      for (const tab in tabs) tabs[tab].innerHTML = "";
+      // Grouper par section pour chaque onglet
+      const data = {};
+      csvRows.forEach(row => {
+        const onglet = (row.Onglet || '').toLowerCase();
+        if (!tabs[onglet]) return;
+        if (!data[onglet]) data[onglet] = {};
+        const section = row.Section || '';
+        if (!data[onglet][section]) data[onglet][section] = [];
+        data[onglet][section].push(row);
+      });
+      // Injecte dans chaque tab
+      Object.keys(tabs).forEach(tabKey => {
+        const tab = tabs[tabKey];
+        if (!data[tabKey]) return tab.innerHTML = "<div class='csv-error'>Aucune donnée pour cet onglet</div>";
+        let html = "";
+        Object.keys(data[tabKey]).forEach(section => {
+          html += `<h2 class="section-title">${section}</h2>`;
+          data[tabKey][section].forEach(item => {
+            html += `
+              <div class="menu-item">
+                <div class="item-info">
+                  <div class="item-name">${item.Nom || ""}</div>
+                  ${item.Description ? `<div class="item-description">${item.Description}</div>` : ""}
+                </div>
+                <div class="item-price">${item.Prix || ""}</div>
+              </div>`;
+          });
         });
-      }
+        tab.innerHTML = html;
+      });
     }
-    
-    function hideLoading() {
-      const loading = document.getElementById('loading');
-      if (loading) {
-        loading.style.display = 'none';
-      }
-    }
-    
-    // Détection d'erreur PDF
-    window.addEventListener('load', function() {
-      setTimeout(() => {
-        const loading = document.getElementById('loading');
-        if (loading && loading.style.display !== 'none') {
-          loading.innerHTML = '<p>Le PDF met du temps à charger...<br><a href="menu.pdf" target="_blank">Cliquez ici pour l\'ouvrir</a></p>';
+    function fetchCSVAndRender() {
+      Papa.parse('menu.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+          if (results.errors && results.errors.length > 0) {
+            document.getElementById('deguster').innerHTML = "<div class='csv-error'>Erreur CSV : " + results.errors[0].message + "</div>";
+          } else {
+            renderCSVMenu(results.data);
+          }
+        },
+        error: function(err) {
+          document.getElementById('deguster').innerHTML = "<div class='csv-error'>Erreur de chargement du CSV</div>";
         }
-      }, 5000);
-    });
+      });
+    }
+    // Appel au chargement
+    window.addEventListener('DOMContentLoaded', fetchCSVAndRender);
   </script>
-
-  <!-- Google Analytics 4 : remplacez G-XXXXXXXXXX par votre ID -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} 
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-  -->
 </body>
 </html>
