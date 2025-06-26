@@ -26,7 +26,7 @@
       font-weight: 400; letter-spacing: 1px;
     }
     .header p {
-      margin: 0.6rem 0 0 0; opacity: 0.9; font-size: 1.05rem;
+      margin: 0.6rem 0 0 0; opacity: 0.9; font-size: 1.25rem;
       font-family: Arial, sans-serif;
       font-weight: 400;
     }
@@ -113,21 +113,25 @@
   <!-- PapaParse pour le CSV -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
-    // Utilitaire pour normaliser nom d'onglet (sans accent, minuscule)
-    function normalizeOnglet(s) {
-      return (s || "")
-        .toLowerCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, "");
+    function isMobile() {
+      return /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
+    // Tab navigation
     function showTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabName).classList.add('active');
       event.target.classList.add('active');
     }
+    // Normalize tab name (accents/case/space robust)
+    function normalizeOnglet(s) {
+      return (s || "")
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "");
+    }
+    // Render CSV
     function renderCSVMenu(csvRows) {
-      // map tab keys to DOM ids
       const tabs = {
         deguster: document.getElementById('deguster'),
         cocktails: document.getElementById('cocktails'),
@@ -136,9 +140,7 @@
         softs: document.getElementById('softs'),
         vins: document.getElementById('vins')
       };
-      // Vide tout
       for (const tab in tabs) tabs[tab].innerHTML = "";
-      // Regroupe par section dans chaque onglet (normalisé)
       const data = {};
       csvRows.forEach(row => {
         const ongletNorm = normalizeOnglet(row.Onglet);
@@ -184,7 +186,23 @@
         }
       });
     }
-    window.addEventListener('DOMContentLoaded', fetchCSVAndRender);
+    window.addEventListener('DOMContentLoaded', function() {
+      fetchCSVAndRender();
+      // PDF embed responsive: mobile = bouton, desktop = iframe
+      var pdfTab = document.getElementById('pdf');
+      if (isMobile()) {
+        pdfTab.innerHTML = `
+          <a href="menu.pdf" target="_blank" style="display:inline-block;padding:2rem 2rem;margin:3rem auto;font-size:1.6rem;color:white;background:#2c5530;border-radius:1.1rem;text-decoration:none;font-weight:bold;box-shadow:0 3px 15px #0002;">
+            📄 Ouvrir le menu PDF
+          </a>
+          <div style="margin-top:1.2rem;">
+            <a href="menu.pdf" target="_blank" style="color:#2c5530;font-weight:bold;text-decoration:underline;">
+              Télécharger le menu PDF
+            </a>
+          </div>
+        `;
+      }
+    });
   </script>
 </body>
 </html>
