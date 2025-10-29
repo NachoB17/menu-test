@@ -295,9 +295,9 @@
         id: 'style_blanc',
         question: 'Quel style en blanc ?',
         options: [
-          { value: 'frais', label: 'Frais & Minéral', desc: 'Tension, vivacité, agrumes, salinité' },
-          { value: 'gras', label: 'Rond & Aromatique', desc: 'Fruits blancs, texture caressante' },
-          { value: 'atypique', label: 'Atypique / Macération', desc: 'Vin orange, peau, épices douces' }
+          { value: 'frais', label: 'Frais et minéral', desc: 'Tension, vivacité, agrumes, salinité' },
+          { value: 'gras', label: 'Rond et aromatique', desc: 'Fruits blancs, texture caressante' },
+          { value: 'atypique', label: 'Atypique / macération', desc: 'Vin orange, peau, épices douces' }
         ]
       },
       {
@@ -305,8 +305,8 @@
         question: 'Plutôt légèreté ou structure ?',
         show: (sel) => sel.style_blanc === 'frais' || sel.style_blanc === 'gras',
         options: [
-          { value: 'leger', label: 'Léger & Désaltérant' },
-          { value: 'structure', label: 'Avec de la Structure' }
+          { value: 'leger', label: 'Léger et désaltérant' },
+          { value: 'structure', label: 'Avec de la structure' }
         ]
       }
     ];
