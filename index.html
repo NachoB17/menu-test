@@ -33,7 +33,6 @@
     html:focus-within{scroll-behavior:smooth}
     body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--gradient-warm);color:var(--vert-fond);min-height:100vh;line-height:1.6}
 
-    /* Motion-safe */
     @media (prefers-reduced-motion:no-preference){
       body{animation:backgroundBreath 8s ease-in-out infinite}
       @keyframes backgroundBreath{0%,100%{background:var(--gradient-warm)}50%{background:linear-gradient(135deg,#D4C48A 0%,#ABA977 50%,#E8D5A3 100%)}}
@@ -41,7 +40,6 @@
 
     a,button{outline-offset:3px}
 
-    /* Header */
     header.header{position:relative;text-align:center;background:var(--gradient-cool);color:var(--beige-logo);padding:3rem 1rem 2rem;box-shadow:var(--shadow-elevated);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.1)}
 
     @media (prefers-reduced-motion:no-preference){
@@ -53,11 +51,9 @@
     .header-logo{height:3.5rem;width:3.5rem;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.4))}
     .header-subtitle{margin:1rem 0 0;font-size:1.2rem;font-weight:300;letter-spacing:1.5px;color:var(--or-accent)}
 
-    /* Share icon */
     .share-btn{position:absolute;right:16px;top:16px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:var(--beige-logo);cursor:pointer;backdrop-filter:blur(6px)}
     .share-btn:hover{background:rgba(255,255,255,.15)}
 
-    /* Search */
     .search-container{margin:1.5rem auto 1rem;max-width:700px;padding:0 1rem}
     .search-row{display:flex;gap:.5rem}
     .search-box{flex:1;padding:1.1rem 1.2rem;font-size:1rem;border-radius:var(--radius-lg);border:2px solid transparent;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:var(--shadow-modern);color:var(--vert-fond)}
@@ -65,15 +61,12 @@
     .clear-btn{border:2px solid var(--beige-logo);background:#fff;border-radius:var(--radius-lg);padding:.9rem 1rem;cursor:pointer}
     .search-results-info{font-size:1rem;color:var(--vert-fond);margin:1rem 0;font-weight:500;text-align:center;padding:.8rem 1.5rem;background:rgba(255,255,255,.9);border-radius:var(--radius-md);backdrop-filter:blur(15px);box-shadow:var(--shadow-modern)}
 
-    /* Main container */
     main.container{max-width:900px;margin:1rem auto 3rem;background:rgba(255,255,255,.98);border-radius:var(--radius-lg);box-shadow:var(--shadow-elevated);overflow:hidden;border:1px solid rgba(13,31,19,.1);backdrop-filter:blur(20px)}
 
-    /* Icon styles */
     .tab-btn{display:inline-flex;align-items:center;gap:.5rem}
     .tab-btn .ico{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px}
     .tab-btn .ico svg{width:18px;height:18px;display:block}
 
-    /* Tabs */
     nav.tab-nav{display:flex;flex-wrap:wrap;justify-content:center;background:linear-gradient(135deg,var(--beige-clair) 0%,rgba(255,255,255,.95) 100%);border-bottom:2px solid var(--vert-fond);gap:.6rem;padding:1rem;position:sticky;top:0;z-index:10;backdrop-filter:blur(15px)}
     .tab-btn{background:#fff;border:2px solid var(--beige-logo);padding:.9rem 1.2rem;font-size:1rem;cursor:pointer;font-weight:500;color:var(--vert-fond);border-radius:var(--radius-lg);position:relative;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .tab-btn[aria-selected="true"]{background:var(--gradient-cool);color:var(--beige-logo);border-color:var(--or-accent);box-shadow:0 8px 24px rgba(13,31,19,.2)}
@@ -81,7 +74,6 @@
     .tab-content{display:none;padding:2rem 1.5rem;background:#fff;min-height:420px}
     .tab-content.active{display:block}
 
-    /* Items */
     .menu-item{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.1rem 1rem;border-bottom:1px solid rgba(13,31,19,.06);background:linear-gradient(135deg,rgba(248,246,240,.4) 0%,rgba(255,255,255,.8) 100%);border-radius:var(--radius-md)}
     .menu-item + .menu-item{margin-top:.7rem}
     .item-info{flex:1;min-width:0}
@@ -94,43 +86,42 @@
     .section-title::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:var(--gradient-warm);border-radius:2px}
     .now-title{font-size:1.3rem;font-family:'Viaoda Libre',serif;color:var(--vert-accent);margin:1rem 0 1rem;text-align:center}
 
-    /* Empty & skeleton */
     .empty-state{text-align:center;color:var(--gris-texte);margin:2.2rem 0;padding:2rem 1.4rem;background:linear-gradient(135deg,rgba(248,246,240,.3) 0%,rgba(255,255,255,.5) 100%);border-radius:var(--radius-lg);border:1px solid rgba(13,31,19,.06)}
     .skeleton{display:block;height:16px;background:linear-gradient(90deg,#eee,#f7f7f7,#eee);border-radius:8px;animation:sheen 1.6s infinite}
     .skeleton.big{height:22px}
     @keyframes sheen{0%{background-position:-200px 0}100%{background-position:calc(200px + 100%) 0}}
 
-    /* Wine Decision Tree Styles */
-    .wine-tree{padding:2rem 1rem}
-    .wine-tree-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;justify-content:center}
-    .wine-tree-title{font-family:'Viaoda Libre',serif;font-size:2rem;color:var(--vert-fond);margin:0}
-    .wine-icon{width:32px;height:32px;color:var(--beige-logo)}
+    /* Wine Decision Tree */
+    .wine-tree{padding:1.5rem 1rem}
+    .wine-tree-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;justify-content:center}
+    .wine-tree-title{font-family:'Viaoda Libre',serif;font-size:1.8rem;color:var(--vert-fond);margin:0;font-weight:400}
+    .wine-icon{width:28px;height:28px;color:var(--beige-logo)}
     
-    .progress-bar{display:flex;gap:.5rem;margin-bottom:1.5rem}
-    .progress-step{flex:1;height:8px;background:rgba(171,169,119,.3);border-radius:4px;transition:all .3s}
+    .progress-bar{display:flex;gap:.5rem;margin-bottom:1.2rem}
+    .progress-step{flex:1;height:6px;background:rgba(171,169,119,.25);border-radius:3px;transition:all .3s}
     .progress-step.active{background:var(--gradient-warm)}
     
-    .progress-info{text-align:center;color:var(--gris-texte);font-size:.9rem;margin-bottom:1.5rem}
+    .progress-info{text-align:center;color:var(--gris-texte);font-size:.85rem;margin-bottom:1.2rem;font-weight:400}
     
-    .question-title{font-size:1.5rem;font-weight:600;color:var(--vert-fond);margin-bottom:1.5rem;text-align:center}
+    .question-title{font-size:1.4rem;font-weight:600;color:var(--vert-fond);margin-bottom:1.2rem;text-align:center}
     
-    .wine-options{display:flex;flex-direction:column;gap:1rem}
+    .wine-options{display:flex;flex-direction:column;gap:.8rem}
     
-    .wine-option{width:100%;padding:1.2rem 1.5rem;text-align:left;border:2px solid var(--beige-logo);border-radius:var(--radius-lg);background:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between}
+    .wine-option{width:100%;padding:1rem 1.2rem;text-align:left;border:2px solid var(--beige-logo);border-radius:var(--radius-lg);background:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;font-family:'Inter',sans-serif}
     
     .wine-option:hover{border-color:var(--vert-fond);background:rgba(248,246,240,.5);transform:translateX(4px)}
     
     .wine-option-content{flex:1}
-    .wine-option-label{font-size:1.1rem;font-weight:600;color:var(--vert-fond);display:flex;align-items:center;gap:.5rem}
-    .wine-option-desc{font-size:.9rem;color:var(--gris-texte);margin-top:.3rem;font-style:italic}
-    .wine-option-icon{font-size:1.5rem}
+    .wine-option-label{font-size:1rem;font-weight:500;color:var(--vert-fond);display:flex;align-items:center;gap:.5rem}
+    .wine-option-desc{font-size:.85rem;color:var(--gris-texte);margin-top:.25rem;font-style:italic;font-weight:400}
+    .wine-option-icon{font-size:1.4rem}
     
-    .chevron-icon{width:20px;height:20px;color:var(--beige-logo);transition:transform .2s}
+    .chevron-icon{width:18px;height:18px;color:var(--beige-logo);transition:transform .2s}
     .wine-option:hover .chevron-icon{transform:translateX(4px)}
     
-    .wine-nav-btns{display:flex;gap:1rem;margin-top:2rem;justify-content:center}
+    .wine-nav-btns{display:flex;gap:.8rem;margin-top:1.5rem;justify-content:center;flex-wrap:wrap}
     
-    .wine-btn{padding:1rem 2rem;border-radius:var(--radius-lg);font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;border:none;display:flex;align-items:center;gap:.5rem}
+    .wine-btn{padding:.85rem 1.5rem;border-radius:var(--radius-lg);font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;border:none;display:flex;align-items:center;gap:.5rem;font-family:'Inter',sans-serif}
     
     .wine-btn-back{background:#fff;border:2px solid var(--beige-logo);color:var(--vert-fond)}
     .wine-btn-back:hover{background:rgba(248,246,240,.5)}
@@ -142,86 +133,75 @@
     .wine-btn-secondary:hover{background:var(--beige-clair)}
     
     .wine-recommendations{padding:1rem}
-    .reco-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;justify-content:center}
-    .reco-title{font-family:'Viaoda Libre',serif;font-size:2rem;color:var(--vert-fond);margin:0}
+    .reco-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;justify-content:center}
+    .reco-title{font-family:'Viaoda Libre',serif;font-size:1.8rem;color:var(--vert-fond);margin:0;font-weight:400}
     
-    .wine-card{border:2px solid var(--beige-logo);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1rem;background:linear-gradient(135deg,rgba(248,246,240,.4) 0%,rgba(255,255,255,.8) 100%);transition:all .3s}
-    .wine-card:hover{border-color:var(--vert-fond);box-shadow:var(--shadow-modern);transform:translateY(-2px)}
+    .wine-card{border:2px solid var(--beige-logo);border-radius:var(--radius-md);padding:1rem;margin-bottom:.8rem;background:linear-gradient(135deg,rgba(248,246,240,.3) 0%,rgba(255,255,255,.8) 100%);transition:all .3s}
+    .wine-card:hover{border-color:var(--vert-fond);box-shadow:0 4px 16px rgba(13,31,19,.08);transform:translateY(-1px)}
     
-    .wine-card-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem}
-    .wine-card-name{font-size:1.3rem;font-weight:700;color:var(--vert-fond);flex:1}
-    .wine-card-price{font-size:1.5rem;font-weight:700;color:var(--vert-fond);background:var(--gradient-warm);padding:.5rem 1rem;border-radius:12px}
+    .wine-card-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:.7rem;gap:1rem}
+    .wine-card-name{font-size:1.1rem;font-weight:600;color:var(--vert-fond);flex:1;line-height:1.3}
+    .wine-card-price{font-size:1.1rem;font-weight:600;color:var(--vert-fond);background:#fff;border:2px solid var(--or-accent);padding:.4rem .8rem;border-radius:10px;white-space:nowrap}
     
-    .wine-card-region{color:var(--gris-texte);font-size:.95rem;font-weight:600;margin-bottom:.5rem}
-    .wine-card-grapes{color:var(--gris-texte);font-size:.85rem;margin-bottom:.8rem}
-    .wine-card-profile{font-style:italic;color:var(--gris-texte);line-height:1.5}
-    
-    .wine-tip{background:rgba(171,169,119,.15);border-left:4px solid var(--beige-logo);padding:1rem 1.5rem;margin-top:2rem;border-radius:8px}
-    .wine-tip strong{color:var(--vert-fond)}
+    .wine-card-region{color:var(--gris-texte);font-size:.85rem;font-weight:500;margin-bottom:.4rem}
+    .wine-card-grapes{color:var(--gris-texte);font-size:.8rem;margin-bottom:.6rem;font-weight:400}
 
-    /* Responsive */
     @media (max-width:768px){
       .header-title{font-size:2.2rem;gap:1.2rem}
       .header-logo{height:3rem;width:3rem}
       .menu-item{flex-direction:column}
       .item-price{align-self:flex-end}
-      .wine-card-header{flex-direction:column;gap:.5rem}
-      .wine-card-price{align-self:flex-end}
+      .wine-card-header{flex-direction:column;gap:.4rem}
+      .wine-card-price{align-self:flex-start}
+      .wine-nav-btns{flex-direction:column}
+      .wine-btn{width:100%}
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="header" role="banner">
     <h1 class="header-title"><span>MAISON</span>
       <img src="https://raw.githubusercontent.com/maison-fleurie/Menu/main/logo.png" alt="Logo Maison Fleurie" class="header-logo" />
       <span>FLEURIE</span></h1>
     
-    <button id="btnShare" class="share-btn" aria-label="Partager" title="Partager" tabindex="0" aria-controls="main">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.02-4.11A2.99 2.99 0 0 0 18 7.91c1.66 0 3-1.34 3-3S19.66 2 18 2s-3 1.34-3 3c0 .24.04.47.09.7l-7.02 4.11A2.99 2.99 0 0 0 6 9.91c-1.66 0-3 1.34-3 3s1.34 3 3 3c.82 0 1.56-.33 2.09-.87l7.02 4.11c-.05.21-.08.43-.08.66 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3Z"/></svg>
+    <button id="btnShare" class="share-btn" aria-label="Partager" title="Partager" tabindex="0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.02-4.11A2.99 2.99 0 0 0 18 7.91c1.66 0 3-1.34 3-3S19.66 2 18 2s-3 1.34-3 3c0 .24.04.47.09.7l-7.02 4.11A2.99 2.99 0 0 0 6 9.91c-1.66 0-3 1.34-3 3s1.34 3 3 3c.82 0 1.56-.33 2.09-.87l7.02 4.11c-.05.21-.08.43-.08.66 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3Z"/></svg>
     </button>
     <p class="header-subtitle">Table des Mets • Cocktails • Vins</p>
   </header>
 
   <noscript>
     <style>.nojs{max-width:900px;margin:1rem auto;background:#fff;border:1px solid #c00;color:#111;padding:1rem;border-radius:12px}</style>
-    <div class="nojs">
-      ⚠️ JavaScript est désactivé. Activez‑le pour voir le menu interactif.
-    </div>
+    <div class="nojs">⚠️ JavaScript est désactivé. Activez‑le pour voir le menu interactif.</div>
   </noscript>
 
-  <!-- Search -->
   <div class="search-container">
     <div class="search-row">
-      <input id="searchBox" class="search-box" type="search" inputmode="search" placeholder="Rechercher… (ex: Vin, Bière, Karaage poulet)" autocomplete="off" />
-      <button id="clearSearch" class="clear-btn" aria-label="Effacer la recherche">✖</button>
+      <input id="searchBox" class="search-box" type="search" placeholder="Rechercher… (ex: Vin, Bière, Karaage poulet)" autocomplete="off" />
+      <button id="clearSearch" class="clear-btn" aria-label="Effacer">✖</button>
     </div>
-    <div id="searchInfo" class="search-results-info" aria-live="polite" style="display:none"></div>
+    <div id="searchInfo" class="search-results-info" style="display:none"></div>
   </div>
 
-  <!-- Main -->
   <main id="main" class="container" role="main">
-    <!-- Tabs -->
-    <nav class="tab-nav" role="tablist" aria-label="Catégories du menu">
-      <button id="tab-now" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-now" data-tab="now"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg></span><span>En ce moment</span></button>
-      <button id="tab-deguster" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-deguster" data-tab="deguster"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v10M11 3v10M5 7h8M16 4h3v9a3 3 0 0 1-3 3h-3"/></svg></span><span>Déguster</span></button>
-      <button id="tab-cocktails" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-cocktails" data-tab="cocktails"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 7v7h-4v-7z"/><path d="M8 4l4 4 4-4"/></svg></span><span>Cocktails</span></button>
-      <button id="tab-chaudes" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-chaudes" data-tab="chaudes"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12a4 4 0 0 1 0 8H4z"/><path d="M16 10h1a3 3 0 0 1 0 6h-1"/><path d="M7 4c0 2 2 2 2 4s-2 2-2 4"/></svg></span><span>Chaudes</span></button>
-      <button id="tab-bieres" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-bieres" data-tab="bieres"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h8v12H7z"/><path d="M15 10h2a3 3 0 0 1 0 6h-2"/><path d="M7 8V7a3 3 0 0 1 3-3h3a3 3 0 0 1 3 3v1"/></svg></span><span>Bières</span></button>
-      <button id="tab-softs" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-softs" data-tab="softs"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l-2 13H9z"/><path d="M10 4l6 3"/><path d="M9 11h8"/></svg></span><span>Softs</span></button>
-      <button id="tab-vins" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-vins" data-tab="vins"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10l-1 6a6 6 0 1 1-8 0z"/><path d="M12 15v6"/></svg></span><span>Vins</span></button>
+    <nav class="tab-nav" role="tablist">
+      <button id="tab-now" class="tab-btn" role="tab" aria-selected="true" data-tab="now"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg></span><span>En ce moment</span></button>
+      <button id="tab-deguster" class="tab-btn" role="tab" aria-selected="false" data-tab="deguster"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3v10M11 3v10M5 7h8M16 4h3v9a3 3 0 0 1-3 3h-3"/></svg></span><span>Déguster</span></button>
+      <button id="tab-cocktails" class="tab-btn" role="tab" aria-selected="false" data-tab="cocktails"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h18l-7 7v7h-4v-7z"/></svg></span><span>Cocktails</span></button>
+      <button id="tab-chaudes" class="tab-btn" role="tab" aria-selected="false" data-tab="chaudes"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8h12a4 4 0 0 1 0 8H4z"/><path d="M7 4c0 2 2 2 2 4s-2 2-2 4"/></svg></span><span>Chaudes</span></button>
+      <button id="tab-bieres" class="tab-btn" role="tab" aria-selected="false" data-tab="bieres"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 8h8v12H7z"/><path d="M15 10h2a3 3 0 0 1 0 6h-2"/></svg></span><span>Bières</span></button>
+      <button id="tab-softs" class="tab-btn" role="tab" aria-selected="false" data-tab="softs"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 7h10l-2 13H9z"/><path d="M9 11h8"/></svg></span><span>Softs</span></button>
+      <button id="tab-vins" class="tab-btn" role="tab" aria-selected="false" data-tab="vins"><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h10l-1 6a6 6 0 1 1-8 0z"/><path d="M12 15v6"/></svg></span><span>Vins</span></button>
     </nav>
 
-    <!-- Panels -->
-    <section id="panel-now" class="tab-content active" role="tabpanel" tabindex="0" aria-labelledby="tab-now"></section>
-    <section id="panel-deguster" class="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-deguster"></section>
-    <section id="panel-cocktails" class="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-cocktails"></section>
-    <section id="panel-chaudes" class="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-chaudes"></section>
-    <section id="panel-bieres" class="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-bieres"></section>
-    <section id="panel-softs" class="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-softs"></section>
-    <section id="panel-vins" class="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-vins"></section>
+    <section id="panel-now" class="tab-content active"></section>
+    <section id="panel-deguster" class="tab-content"></section>
+    <section id="panel-cocktails" class="tab-content"></section>
+    <section id="panel-chaudes" class="tab-content"></section>
+    <section id="panel-bieres" class="tab-content"></section>
+    <section id="panel-softs" class="tab-content"></section>
+    <section id="panel-vins" class="tab-content"></section>
 
-    <!-- Error -->
     <div id="errorContainer" class="empty-state" style="display:none">
       <h3>Oups ! Impossible de charger le menu</h3>
       <p>Vérifiez votre connexion et réessayez.</p>
@@ -230,45 +210,28 @@
   </main>
 
   <script>
-    // ====== Safety shim ======
     if (typeof window !== 'undefined' && typeof window.invoke === 'undefined') {
-      window.invoke = function(){ console.warn('[shim] window.invoke() appelé mais non défini — no‑op.'); };
+      window.invoke = function(){ console.warn('[shim] window.invoke() non défini'); };
     }
 
-    // ====== Config ======
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/1lgd-rGS2kLCn0yPtGMc7RyMDue-YERmKOjNT3QKgJ3Y/export?format=csv&gid=0';
-    const CACHE_KEY = 'maison-fleurie-menu-cache-v1';
-    const CACHE_AT = 'maison-fleurie-menu-cache-at';
-    const CACHE_TTL_MS = 15 * 60 * 1000;
+    const CACHE_KEY = 'mf-menu-v1'; const CACHE_AT = 'mf-menu-at'; const CACHE_TTL = 15*60*1000;
 
-    // ====== State ======
-    let allMenuData = [];
-    let wineData = [];
-    let currentTab = 'now';
-    let isSearching = false;
-    let searchTimeout;
-    
-    // Wine tree state
-    let wineTreeStep = 0;
-    let wineTreeSelections = {};
-    let showingWineList = false;
+    let allMenuData = [], wineData = [], currentTab = 'now', isSearching = false, searchTimeout;
+    let wineTreeStep = 0, wineTreeSelections = {}, showingWineList = false;
 
-    // ====== Utils ======
     const normalize = (s='') => s.toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
     const tabIdFromOnglet = (s='') => normalize(s).replace(/\s/g,'');
     const formatPrice = (raw='') => {
       const str = String(raw).trim();
-      if (!str) return '';
-      if (/€|\//.test(str)) return str;
-      const num = Number(String(str).replace(',', '.'));
-      if (!Number.isNaN(num) && Number.isInteger(num)) return `${num}€`;
-      return str;
+      if (!str || /€|\//.test(str)) return str;
+      const num = Number(str.replace(',','.'));
+      return (!isNaN(num) && Number.isInteger(num)) ? `${num}€` : str;
     };
-    const byNameFR = (a,b) => (a?.Nom||'').localeCompare(b?.Nom||'', 'fr', {sensitivity:'base'});
+    const byNameFR = (a,b) => (a?.Nom||'').localeCompare(b?.Nom||'','fr',{sensitivity:'base'});
     const qs = sel => document.querySelector(sel);
     const qsa = sel => Array.from(document.querySelectorAll(sel));
 
-    // ====== Wine Decision Tree Logic ======
     const wineQuestions = [
       {
         id: 'color',
@@ -295,9 +258,9 @@
         id: 'style_blanc',
         question: 'Quel style en blanc ?',
         options: [
-          { value: 'frais', label: 'Frais et minéral', desc: 'Tension, vivacité, agrumes, salinité' },
-          { value: 'gras', label: 'Rond et aromatique', desc: 'Fruits blancs, texture caressante' },
-          { value: 'atypique', label: 'Atypique / macération', desc: 'Vin orange, peau, épices douces' }
+          { value: 'frais', label: 'Frais & Minéral', desc: 'Tension, vivacité, agrumes, salinité' },
+          { value: 'gras', label: 'Rond & Aromatique', desc: 'Fruits blancs, texture caressante' },
+          { value: 'atypique', label: 'Atypique / Macération', desc: 'Vin orange, peau, épices douces' }
         ]
       },
       {
@@ -305,8 +268,8 @@
         question: 'Plutôt légèreté ou structure ?',
         show: (sel) => sel.style_blanc === 'frais' || sel.style_blanc === 'gras',
         options: [
-          { value: 'leger', label: 'Léger et désaltérant' },
-          { value: 'structure', label: 'Avec de la structure' }
+          { value: 'leger', label: 'Léger & Désaltérant' },
+          { value: 'structure', label: 'Avec de la Structure' }
         ]
       }
     ];
@@ -317,9 +280,9 @@
         question: 'Quel type de plat ?',
         show: (sel) => sel.context === 'plat' && sel.color === 'blanc',
         options: [
-          { value: 'poisson', label: 'Poisson / fruits de mer' },
-          { value: 'viande_blanche', label: 'Viande blanche / volaille' },
-          { value: 'vegetarien', label: 'Végétarien / fromage' }
+          { value: 'poisson', label: 'Poisson / Fruits de Mer' },
+          { value: 'viande_blanche', label: 'Viande Blanche / Volaille' },
+          { value: 'vegetarien', label: 'Végétarien / Fromage' }
         ]
       }
     ];
@@ -329,9 +292,9 @@
         id: 'style_rouge',
         question: 'Quel style en rouge ?',
         options: [
-          { value: 'souple', label: 'Fruits & souplesse', desc: 'Croquant, facile à boire' },
-          { value: 'puissant', label: 'Puissant & structuré', desc: 'Tanins, épices, garrigue' },
-          { value: 'nature', label: 'Nature / biodynamie', desc: 'Authenticité, terroir vivant' }
+          { value: 'souple', label: 'Fruits & Souplesse', desc: 'Croquant, facile à boire' },
+          { value: 'puissant', label: 'Puissant & Structuré', desc: 'Tanins, épices, garrigue' },
+          { value: 'nature', label: 'Nature / Biodynamie', desc: 'Authenticité, terroir vivant' }
         ]
       },
       {
@@ -341,13 +304,13 @@
         options: (sel) => {
           if (sel.style_rouge === 'souple') {
             return [
-              { value: 'fruit', label: 'Fruits rouges, gourmand' },
-              { value: 'elegance', label: 'Élégance et finesse' }
+              { value: 'fruit', label: 'Fruits Rouges & Gourmand' },
+              { value: 'elegance', label: 'Élégance & Finesse' }
             ];
           }
           return [
-            { value: 'epice', label: 'Épices & garrigue' },
-            { value: 'terroir', label: 'Expression du terroir (calcaire/schiste)' }
+            { value: 'epice', label: 'Épices & Garrigue' },
+            { value: 'terroir', label: 'Expression du Terroir' }
           ];
         }
       },
@@ -356,7 +319,7 @@
         question: 'Quelle origine ?',
         show: (sel) => sel.style_rouge === 'nature',
         options: [
-          { value: 'loire', label: 'Loire (Cabernet franc, Chenin)' },
+          { value: 'loire', label: 'Loire (Cabernet Franc, Chenin)' },
           { value: 'sud', label: 'Sud (Grenache, Syrah, Mourvèdre)' }
         ]
       }
@@ -368,121 +331,104 @@
         question: 'Quel type de plat ?',
         show: (sel) => sel.context === 'plat' && sel.color === 'rouge',
         options: [
-          { value: 'viande_rouge', label: 'Viande rouge / gibier' },
-          { value: 'viande_blanche', label: 'Viande blanche / volaille' },
-          { value: 'vegetarien', label: 'Végétarien / légumes' }
+          { value: 'viande_rouge', label: 'Viande Rouge / Gibier' },
+          { value: 'viande_blanche', label: 'Viande Blanche / Volaille' },
+          { value: 'vegetarien', label: 'Végétarien / Légumes' }
         ]
       }
     ];
 
-    // Tag matching rules
     const getWinesByPath = (selections) => {
       const { color, context, style_blanc, intensite_blanc, style_rouge, caractere, origine_nature, accord_blanc, accord_rouge } = selections;
       
       let filtered = wineData.filter(w => {
         const section = normalize(w.Section || '');
-        const name = normalize(w.Nom || '');
-        const desc = normalize(w.Description || '');
-        const allText = `${section} ${name} ${desc}`;
-        
-        // Color filter
         if (color === 'rose' && !section.includes('rose')) return false;
         if (color === 'blanc' && !section.includes('blanc')) return false;
         if (color === 'rouge' && !section.includes('rouge')) return false;
-        
         return true;
       });
 
-      // Context scoring
-      const contextKeywords = {
+      const contextKw = {
         apero: ['verre', 'apéritif', 'léger', 'frais', 'croquant'],
         plat: ['bouteille', 'gastronomique', 'structure', 'puissant'],
         degustation: ['bio', 'biodynamie', 'nature', 'terroir', 'vieilles vignes']
       };
 
-      // Blanc style scoring
-      const blancStyleKeywords = {
+      const blancStyleKw = {
         frais: ['frais', 'minéral', 'vif', 'salin', 'iodé', 'tension', 'citron', 'agrumes'],
         gras: ['rond', 'gras', 'riche', 'aromatique', 'fruits blancs', 'floral'],
         atypique: ['orange', 'macération', 'nature', 'biodynamie', 'atypique']
       };
 
-      // Rouge style scoring
-      const rougeStyleKeywords = {
+      const rougeStyleKw = {
         souple: ['souple', 'gamay', 'croquant', 'fruits rouges', 'gourmand', 'facile'],
         puissant: ['puissant', 'structure', 'tanins', 'syrah', 'mourvèdre', 'épices', 'garrigue'],
         nature: ['nature', 'bio', 'biodynamie', 'cabernet franc', 'grenache']
       };
 
-      // Accord mets scoring
-      const accordBlancKeywords = {
+      const accordBlancKw = {
         poisson: ['muscadet', 'iodé', 'salin', 'fruits de mer', 'minéral'],
         viande_blanche: ['chardonnay', 'rond', 'gras', 'volaille'],
         vegetarien: ['frais', 'minéral', 'léger', 'biodynamie']
       };
 
-      const accordRougeKeywords = {
+      const accordRougeKw = {
         viande_rouge: ['puissant', 'structure', 'tanins', 'syrah', 'crozes', 'terroir'],
         viande_blanche: ['souple', 'élégant', 'gamay', 'pinot noir'],
         vegetarien: ['souple', 'fruits', 'léger', 'bio']
       };
 
-      // Score wines
       filtered = filtered.map(wine => {
-        const wineText = normalize(`${wine.Section} ${wine.Nom} ${wine.Description}`);
+        const txt = normalize(`${wine.Section} ${wine.Nom} ${wine.Description}`);
         let score = 0;
 
-        // Context match
-        if (context && contextKeywords[context]) {
-          score += contextKeywords[context].filter(kw => wineText.includes(kw)).length * 2;
+        if (context && contextKw[context]) {
+          score += contextKw[context].filter(k => txt.includes(k)).length * 2;
         }
-
-        // Style blanc match
-        if (color === 'blanc' && style_blanc && blancStyleKeywords[style_blanc]) {
-          score += blancStyleKeywords[style_blanc].filter(kw => wineText.includes(kw)).length * 3;
+        if (color === 'blanc' && style_blanc && blancStyleKw[style_blanc]) {
+          score += blancStyleKw[style_blanc].filter(k => txt.includes(k)).length * 3;
         }
-
-        // Style rouge match
-        if (color === 'rouge' && style_rouge && rougeStyleKeywords[style_rouge]) {
-          score += rougeStyleKeywords[style_rouge].filter(kw => wineText.includes(kw)).length * 3;
+        if (color === 'rouge' && style_rouge && rougeStyleKw[style_rouge]) {
+          score += rougeStyleKw[style_rouge].filter(k => txt.includes(k)).length * 3;
         }
-
-        // Accord blanc match
-        if (accord_blanc && accordBlancKeywords[accord_blanc]) {
-          score += accordBlancKeywords[accord_blanc].filter(kw => wineText.includes(kw)).length * 4;
+        if (accord_blanc && accordBlancKw[accord_blanc]) {
+          score += accordBlancKw[accord_blanc].filter(k => txt.includes(k)).length * 4;
         }
-
-        // Accord rouge match
-        if (accord_rouge && accordRougeKeywords[accord_rouge]) {
-          score += accordRougeKeywords[accord_rouge].filter(kw => wineText.includes(kw)).length * 4;
+        if (accord_rouge && accordRougeKw[accord_rouge]) {
+          score += accordRougeKw[accord_rouge].filter(k => txt.includes(k)).length * 4;
         }
-
-        // Intensity match for blanc
-        if (intensite_blanc === 'leger' && (wineText.includes('verre') || wineText.includes('léger'))) score += 2;
-        if (intensite_blanc === 'structure' && (wineText.includes('bouteille') || wineText.includes('structure'))) score += 2;
-
-        // Character match for rouge
-        if (caractere === 'fruit' && wineText.includes('fruit')) score += 2;
-        if (caractere === 'elegance' && (wineText.includes('élégant') || wineText.includes('finesse'))) score += 2;
-        if (caractere === 'epice' && (wineText.includes('épice') || wineText.includes('garrigue'))) score += 2;
-        if (caractere === 'terroir' && wineText.includes('terroir')) score += 2;
-
-        // Origin match for nature
-        if (origine_nature === 'loire' && wineText.includes('loire')) score += 3;
-        if (origine_nature === 'sud' && (wineText.includes('languedoc') || wineText.includes('pic saint loup'))) score += 3;
+        if (intensite_blanc === 'leger' && (txt.includes('verre') || txt.includes('léger'))) score += 2;
+        if (intensite_blanc === 'structure' && (txt.includes('bouteille') || txt.includes('structure'))) score += 2;
+        if (caractere === 'fruit' && txt.includes('fruit')) score += 2;
+        if (caractere === 'elegance' && (txt.includes('élégant') || txt.includes('finesse'))) score += 2;
+        if (caractere === 'epice' && (txt.includes('épice') || txt.includes('garrigue'))) score += 2;
+        if (caractere === 'terroir' && txt.includes('terroir')) score += 2;
+        if (origine_nature === 'loire' && txt.includes('loire')) score += 3;
+        if (origine_nature === 'sud' && (txt.includes('languedoc') || txt.includes('pic saint loup'))) score += 3;
 
         return { wine, score };
       });
 
-      // Sort by score and return top recommendations
       filtered.sort((a, b) => b.score - a.score);
       
-      // Return top 3-6 wines with score > 0
-      const recommendations = filtered.filter(w => w.score > 0).slice(0, 6);
+      const verreWines = filtered.filter(w => {
+        const sec = normalize(w.wine.Section || '');
+        const desc = normalize(w.wine.Description || '');
+        return sec.includes('verre') || desc.includes('12cl');
+      });
       
-      // If no good matches, return best available from color
+      const bouteilleWines = filtered.filter(w => {
+        const sec = normalize(w.wine.Section || '');
+        const desc = normalize(w.wine.Description || '');
+        return !sec.includes('verre') && !desc.includes('12cl');
+      });
+      
+      const prioritized = [...verreWines, ...bouteilleWines];
+      const recommendations = prioritized.filter(w => w.score > 0).slice(0, 6);
+      
       if (recommendations.length === 0) {
-        return filtered.slice(0, 4).map(w => w.wine);
+        return prioritized.slice(0, 4).map(w => w.wine);
       }
       
       return recommendations.map(w => w.wine);
@@ -490,7 +436,6 @@
 
     const getWineQuestions = () => {
       let questions = [...wineQuestions];
-      
       if (wineTreeSelections.color === 'blanc') {
         questions = [...questions, ...blancQuestions];
         if (wineTreeSelections.context === 'plat') {
@@ -502,7 +447,6 @@
           questions = [...questions, ...rougePlatQuestions];
         }
       }
-      
       return questions.filter(q => !q.show || q.show(wineTreeSelections));
     };
 
@@ -517,16 +461,13 @@
 
       const questions = getWineQuestions();
       
-      // Check if we're done
       if (wineTreeStep >= questions.length) {
         renderWineRecommendations();
         return;
       }
 
       const currentQ = questions[wineTreeStep];
-      const options = typeof currentQ.options === 'function' 
-        ? currentQ.options(wineTreeSelections) 
-        : currentQ.options;
+      const options = typeof currentQ.options === 'function' ? currentQ.options(wineTreeSelections) : currentQ.options;
 
       let html = `
         <div class="wine-tree">
@@ -562,22 +503,24 @@
             `).join('')}
           </div>
           
-          ${wineTreeStep > 0 ? `
-            <div class="wine-nav-btns">
+          <div class="wine-nav-btns">
+            ${wineTreeStep > 0 ? `
               <button class="wine-btn wine-btn-back" id="wineBackBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M15 18l-6-6 6-6"/>
                 </svg>
                 Retour
               </button>
-            </div>
-          ` : ''}
+            ` : ''}
+            <button class="wine-btn wine-btn-secondary" id="showAllWinesFromTreeBtn">
+              📋 Voir tous les vins
+            </button>
+          </div>
         </div>
       `;
 
       panel.innerHTML = html;
 
-      // Event listeners
       qsa('.wine-option').forEach(btn => {
         btn.addEventListener('click', () => {
           wineTreeSelections[currentQ.id] = btn.dataset.value;
@@ -593,6 +536,14 @@
           delete wineTreeSelections[prevQ.id];
           wineTreeStep--;
           renderWineTree();
+        });
+      }
+      
+      const showAllBtn = qs('#showAllWinesFromTreeBtn');
+      if (showAllBtn) {
+        showAllBtn.addEventListener('click', () => {
+          showingWineList = true;
+          renderWineList();
         });
       }
     };
@@ -618,20 +569,14 @@
                 <div class="wine-card-name">${wine.Nom}</div>
                 <div class="wine-card-price">${formatPrice(wine.Prix)}</div>
               </div>
-              ${wine.Description ? `
-                <div class="wine-card-region">${wine.Description.split(',')[0]}</div>
-                <div class="wine-card-grapes">${wine.Description.includes(',') ? wine.Description.split(',').slice(1).join(',').trim() : ''}</div>
-              ` : ''}
+              ${wine.Description ? `<div class="wine-card-region">${wine.Description.split(',')[0]}</div>` : ''}
+              ${wine.Description && wine.Description.includes(',') ? `<div class="wine-card-grapes">${wine.Description.split(',').slice(1).join(',').trim()}</div>` : ''}
             </div>
           `).join('')}
 
-          <div class="wine-tip">
-            <strong>💡 Conseil :</strong> Proposez au besoin un 12 cl à l'aveugle (blanc/rouge) pour confirmer le style. Orientez ensuite sur la bouteille correspondante.
-          </div>
-
           <div class="wine-nav-btns">
             <button class="wine-btn wine-btn-back" id="wineResetBtn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
                 <path d="M21 3v5h-5"/>
               </svg>
@@ -705,7 +650,6 @@
       });
     };
 
-    // ====== Rendering (other tabs) ======
     const panels = {
       now: qs('#panel-now'), deguster: qs('#panel-deguster'), cocktails: qs('#panel-cocktails'),
       chaudes: qs('#panel-chaudes'), bieres: qs('#panel-bieres'), softs: qs('#panel-softs'), vins: qs('#panel-vins')
@@ -715,21 +659,17 @@
       el.innerHTML = `
         <div class="now-title">Chargement…</div>
         <div class="menu-item"><span class="skeleton big" style="width:60%"></span><span class="skeleton" style="width:90px"></span></div>
-        <div class="menu-item"><span class="skeleton big" style="width:40%"></span><span class="skeleton" style="width:90px"></span></div>
-        <div class="menu-item"><span class="skeleton big" style="width:50%"></span><span class="skeleton" style="width:90px"></span></div>`;
+        <div class="menu-item"><span class="skeleton big" style="width:40%"></span><span class="skeleton" style="width:90px"></span></div>`;
     };
 
-    const createItemHTML = (item, {showSection=false}={}) => {
-      const sectionText = item.Section && showSection ? item.Section : '';
-      const section = sectionText ? `<div class="item-section">${sectionText}</div>` : '';
+    const createItemHTML = (item) => {
+      const section = item.Section ? `<div class="item-section">${item.Section}</div>` : '';
       const desc = item.Description ? `<div class="item-description">${item.Description}</div>` : '';
-      
       return `
         <div class="menu-item">
           <div class="item-info">
             <div class="item-name">${item.Nom || ''}</div>
-            ${section}
-            ${desc}
+            ${section}${desc}
           </div>
           <div class="item-price">${formatPrice(item.Prix || '')}</div>
         </div>`;
@@ -740,7 +680,7 @@
       let html = `<div class="now-title">À l'affiche en ce moment</div>`;
       const nowItems = allMenuData.filter(i => normalize(i['En ce moment']) === 'oui');
       if (!nowItems.length){
-        el.innerHTML = `<div class="empty-state"><h3>Aucune nouveauté</h3><p>Aucun plat ou boisson n'est mis en avant pour l'instant.</p></div>`;
+        el.innerHTML = `<div class="empty-state"><h3>Aucune nouveauté</h3></div>`;
         return;
       }
       const groups = new Map();
@@ -754,7 +694,6 @@
         items.sort(byNameFR).forEach(it => { html += createItemHTML(it); });
       }
       el.innerHTML = html;
-      updateDynamicHints(nowItems.map(i => i.Nom).filter(Boolean));
     };
 
     const renderTab = (tabName) => {
@@ -764,7 +703,7 @@
       const el = panels[tabName]; if (!el) return;
       const tabItems = allMenuData.filter(i => tabIdFromOnglet(i.Onglet) === tabName);
       if (!tabItems.length){
-        el.innerHTML = `<div class="empty-state"><h3>Section vide</h3><p>Aucun élément dans cette catégorie pour le moment.</p></div>`;
+        el.innerHTML = `<div class="empty-state"><h3>Section vide</h3></div>`;
         return;
       }
       const groups = new Map();
@@ -782,11 +721,9 @@
     };
 
     const renderAll = () => {
-      Object.values(panels).forEach(p => p && (p.innerHTML = ''));
       for (const key of Object.keys(panels)) renderTab(key);
     };
 
-    // ====== Tabs interaction ======
     const setActiveTab = (tabName) => {
       currentTab = tabName;
       qsa('.tab-btn').forEach(btn => {
@@ -796,12 +733,7 @@
       });
       qsa('.tab-content').forEach(p => p.classList.remove('active'));
       qs(`#panel-${tabName}`)?.classList.add('active');
-      
-      if (isSearching) { 
-        displaySearchResults(lastSearchResults, lastQuery); 
-      } else { 
-        renderTab(tabName); 
-      }
+      if (!isSearching) renderTab(tabName);
     };
 
     const focusNextTab = (dir) => {
@@ -814,32 +746,28 @@
 
     function ensurePapa(){
       return new Promise((resolve, reject) => {
-        if (window.Papa && typeof window.Papa.parse === 'function') return resolve();
+        if (window.Papa?.parse) return resolve();
         const s = document.createElement('script');
         s.src = 'https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js';
-        s.onload = () => (window.Papa ? resolve() : reject(new Error('PapaParse loaded but missing')));
-        s.onerror = () => reject(new Error('PapaParse failed to load'));
+        s.onload = () => window.Papa?.parse ? resolve() : reject();
+        s.onerror = reject;
         document.head.appendChild(s);
-        setTimeout(() => { if (!(window.Papa && window.Papa.parse)) reject(new Error('PapaParse timeout')); }, 5000);
+        setTimeout(() => { if (!window.Papa?.parse) reject(); }, 5000);
       });
     }
 
-    // ====== Data ======
     const parseAndSet = (rows=[]) => {
       const sanitize = (r) => { const o={}; for (const k in r){ const nk=(k||'').trim(); let v=r[k]; if (typeof v==='string') v=v.trim(); o[nk]=v; } return o; };
       const cleaned = rows.map(sanitize);
       allMenuData = cleaned.filter(i => normalize(i.Actif) === 'oui' || normalize(i['Actif '])==='oui');
-      
-      // Extract wine data
       wineData = allMenuData.filter(i => normalize(i.Onglet).includes('vin'));
-      
       renderAll();
     };
 
     const loadFromCacheIfFresh = () => {
       try{
         const at = Number(localStorage.getItem(CACHE_AT)||0);
-        if (Date.now() - at < CACHE_TTL_MS){
+        if (Date.now() - at < CACHE_TTL){
           const cached = JSON.parse(localStorage.getItem(CACHE_KEY)||'[]');
           if (Array.isArray(cached) && cached.length){ parseAndSet(cached); return true; }
         }
@@ -861,37 +789,33 @@
       Object.values(panels).forEach(p => p && showSkeleton(p));
       if (loadFromCacheIfFresh()) return;
 
-      let attempt = 0; const maxAttempts = 3;
-      const backoff = (n) => new Promise(r => setTimeout(r, 400 * Math.pow(2, n)));
-
-      while (attempt < maxAttempts){
+      let attempt = 0;
+      while (attempt < 3){
         try{
           await new Promise((resolve, reject) => {
             Papa.parse(CSV_URL, {
               download: true,
               header: true,
               complete: (res) => {
-                if (res.errors && res.errors.length){ reject(res.errors); return; }
+                if (res.errors?.length){ reject(res.errors); return; }
                 hideError();
                 saveCache(res.data);
                 parseAndSet(res.data);
                 resolve();
               },
-              error: (err) => reject(err)
+              error: reject
             });
           });
           return;
         }catch(e){
           attempt++;
-          if (attempt >= maxAttempts){ showError(); break; }
-          await backoff(attempt);
+          if (attempt >= 3){ showError(); break; }
+          await new Promise(r => setTimeout(r, 400 * Math.pow(2, attempt)));
         }
       }
     };
 
-    // ====== Search ======
-    let lastQuery = '';
-    let lastSearchResults = [];
+    let lastQuery = '', lastSearchResults = [];
 
     const performSearch = (query) => {
       isSearching = true; lastQuery = query;
@@ -900,136 +824,50 @@
         normalize(i.Nom).includes(q) || normalize(i.Description).includes(q) || normalize(i.Section).includes(q)
       );
       lastSearchResults = results;
-      displaySearchResults(results, query);
       const info = qs('#searchInfo');
       info.style.display = 'block';
       info.textContent = `${results.length} résultat(s) pour "${query}"`;
     };
 
-    const displaySearchResults = (results, query) => {
-      const container = qs(`#panel-${currentTab}`);
-      if (!results.length){
-        container.innerHTML = `<div class="empty-state"><h3>Aucun résultat</h3><p>Aucun plat ou boisson ne correspond à "${query}".</p></div>`;
-        return;
-      }
-      const byTab = new Map();
-      for (const it of results){
-        const tab = tabIdFromOnglet(it.Onglet) || 'autres';
-        if (!byTab.has(tab)) byTab.set(tab, new Map());
-        const bySec = byTab.get(tab);
-        const sec = it.Section || 'Autres';
-        if (!bySec.has(sec)) bySec.set(sec, []);
-        bySec.get(sec).push(it);
-      }
-      let html = '';
-      for (const [tab, secMap] of byTab){
-        const tabTitle = tab === 'now' ? 'En ce moment' : tab.charAt(0).toUpperCase()+tab.slice(1);
-        html += `<h2 class="section-title">${tabTitle}</h2>`;
-        for (const [sec, items] of secMap){
-          html += `<div class="now-title">${sec}</div>`;
-          items.sort(byNameFR).forEach(it => { html += createItemHTML(it, {showSection:false}); });
-        }
-      }
-      container.innerHTML = html;
-    };
-
     const clearSearch = () => {
-      isSearching = false; lastQuery=''; lastSearchResults=[];
+      isSearching = false;
       qs('#searchBox').value = '';
-      const info = qs('#searchInfo'); info.style.display = 'none'; info.textContent = '';
+      qs('#searchInfo').style.display = 'none';
       renderTab(currentTab);
-      qs('#searchBox').focus();
     };
 
-    // ====== Placeholder rotation ======
-    const BASE_HINTS = ['Vin', 'Karaage poulet', 'Bière'];
-    let HINTS = [...BASE_HINTS];
-    let hintIndex = 0;
-
-    const updateDynamicHints = (nowTitles=[]) => {
-      const cleaned = nowTitles.map(t => String(t).trim()).filter(Boolean);
-      const set = new Set([ ...BASE_HINTS.filter(h=>h!=='Bière'), ...cleaned ]);
-      const withoutBeer = Array.from(set);
-      HINTS = [...withoutBeer, 'Bière'];
-    };
-
-    const startPlaceholderRotation = () => {
-      const input = qs('#searchBox'); if (!input) return;
-      const tick = () => {
-        if (document.activeElement !== input && !input.value){
-          const currentHint = HINTS[hintIndex % HINTS.length];
-          input.placeholder = `Rechercher… (ex: ${currentHint})`;
-        }
-        hintIndex = (hintIndex + 1) % HINTS.length;
-      };
-      tick();
-      setInterval(tick, 3000);
-    };
-
-    // ====== Init ======
     const init = () => {
-      // tabs click
       qsa('.tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           setActiveTab(btn.dataset.tab);
         });
-        // keyboard
         btn.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight') { e.preventDefault(); focusNextTab(+1); }
           if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNextTab(-1); }
-          if (e.key === 'Home')       { e.preventDefault(); setActiveTab(qsa('.tab-btn')[0].dataset.tab); qsa('.tab-btn')[0].focus(); }
-          if (e.key === 'End')        { const tabs=qsa('.tab-btn'); e.preventDefault(); setActiveTab(tabs[tabs.length-1].dataset.tab); tabs[tabs.length-1].focus(); }
         });
       });
 
-      // search
-      const searchBox = qs('#searchBox');
-      const clearBtn = qs('#clearSearch');
-      searchBox.addEventListener('input', (e) => {
+      qs('#searchBox').addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
         const query = e.target.value.trim();
         if (!query){ clearSearch(); return; }
         searchTimeout = setTimeout(() => performSearch(query), 250);
       });
-      clearBtn.addEventListener('click', clearSearch);
+      qs('#clearSearch').addEventListener('click', clearSearch);
+      qs('#retryBtn').addEventListener('click', () => ensurePapa().then(fetchCSVAndRender).catch(showError));
 
-      // retry
-      qs('#retryBtn').addEventListener('click', () => ensurePapa().then(fetchCSVAndRender).catch(()=>showError()));
-
-      // share icon
-      const share = document.getElementById('btnShare');
+      const share = qs('#btnShare');
       if (share){
         share.addEventListener('click', async () => {
           const url = location.href;
           if (navigator.share){ try{ await navigator.share({title:document.title,url}); }catch(e){} }
-          else { try{ await navigator.clipboard.writeText(url); share.setAttribute('title','Lien copié'); }catch(e){} }
+          else { try{ await navigator.clipboard.writeText(url); }catch(e){} }
         });
       }
 
-      startPlaceholderRotation();
-
-      // initial load
-      ensurePapa().then(fetchCSVAndRender).catch((e)=>{ console.error(e); showError(); });
-
-      // ====== Self-tests ======
-      runSelfTests();
+      ensurePapa().then(fetchCSVAndRender).catch(showError);
     };
-
-    function runSelfTests(){
-      const tests = [];
-      const assert = (name, cond) => tests.push({name, pass: !!cond});
-      assert('normalize accents', normalize('Bière') === 'biere');
-      assert('tabIdFromOnglet', tabIdFromOnglet('  Déguster ') === 'deguster');
-      assert('formatPrice number', formatPrice('12') === '12€');
-      assert('formatPrice slash passthrough', formatPrice('12€/18€') === '12€/18€');
-      assert('formatPrice euro passthrough', formatPrice('12€') === '12€');
-      assert('invoke shim', typeof window.invoke === 'function');
-      assert('wineData loaded', wineData.length >= 0);
-      console.groupCollapsed('%cMaison Fleurie — self-tests','color:#2A4A32;font-weight:bold');
-      tests.forEach(t => console[t.pass?'log':'error']((t.pass?'✅':'❌')+' '+t.name));
-      console.groupEnd();
-    }
 
     document.addEventListener('DOMContentLoaded', init);
   </script>
