@@ -1069,28 +1069,51 @@
     const getWinesByPath = (selections) => {
       const { color, moment, style, accord } = selections;
 
+      console.log('[DEBUG] getWinesByPath - selections:', selections);
+      console.log('[DEBUG] Total vins disponibles:', wineData.length);
+
+      // Vérifier si les colonnes tag_* existent
+      if (wineData.length > 0) {
+        const firstWine = wineData[0];
+        console.log('[DEBUG] Colonnes disponibles sur le premier vin:', Object.keys(firstWine));
+        console.log('[DEBUG] Exemple de vin:', firstWine);
+      }
+
       // Filtrer les vins actifs et scorer selon les tags
       let scored = wineData.map(wine => {
         let score = 0;
+        let details = { name: wine.Nom, matches: [] };
 
         // Match tag_couleur (poids: 10) - obligatoire
-        if (color && normalize(wine.tag_couleur || '') === normalize(color)) {
+        const wineCouleur = normalize(wine.tag_couleur || '');
+        if (color && wineCouleur === normalize(color)) {
           score += 10;
+          details.matches.push(`couleur:${color}`);
         }
 
         // Match tag_moment (poids: 8) - obligatoire
-        if (moment && normalize(wine.tag_moment || '') === normalize(moment)) {
+        const wineMoment = normalize(wine.tag_moment || '');
+        if (moment && wineMoment === normalize(moment)) {
           score += 8;
+          details.matches.push(`moment:${moment}`);
         }
 
         // Match tag_style (poids: 6) - conditionnel
-        if (style && normalize(wine.tag_style || '') === normalize(style)) {
+        const wineStyle = normalize(wine.tag_style || '');
+        if (style && wineStyle === normalize(style)) {
           score += 6;
+          details.matches.push(`style:${style}`);
         }
 
         // Match tag_accord (poids: 5) - optionnel
-        if (accord && normalize(wine.tag_accord || '') === normalize(accord)) {
+        const wineAccord = normalize(wine.tag_accord || '');
+        if (accord && wineAccord === normalize(accord)) {
           score += 5;
+          details.matches.push(`accord:${accord}`);
+        }
+
+        if (score > 0) {
+          console.log('[DEBUG] Vin scoré:', details.name, 'score:', score, 'matches:', details.matches);
         }
 
         return { wine, score };
@@ -1099,11 +1122,23 @@
       // Filtrer uniquement les vins avec score > 0 et trier par score décroissant
       scored = scored.filter(w => w.score > 0).sort((a, b) => b.score - a.score);
 
+      console.log('[DEBUG] Vins avec score > 0:', scored.length);
+
       // Si pas assez de résultats, retourner des vins de la bonne couleur
       if (scored.length < 3) {
-        const fallback = wineData.filter(w =>
-          color && normalize(w.tag_couleur || '') === normalize(color)
-        ).slice(0, 6);
+        console.log('[DEBUG] Pas assez de résultats, utilisation du fallback');
+        const fallback = wineData.filter(w => {
+          const match = color && normalize(w.tag_couleur || '') === normalize(color);
+          if (match) console.log('[DEBUG] Fallback trouvé:', w.Nom);
+          return match;
+        }).slice(0, 6);
+
+        // Si même le fallback ne retourne rien, retourner les 6 premiers vins de la section vins
+        if (fallback.length === 0) {
+          console.warn('[WARNING] Aucun vin trouvé avec tags, retour aux premiers vins disponibles');
+          return wineData.slice(0, 6);
+        }
+
         return fallback;
       }
 
@@ -1221,6 +1256,14 @@
 
       const recommendations = getWinesByPath(wineTreeSelections);
 
+      // Vérifier si les colonnes tag_* sont présentes
+      const hasTagColumns = wineData.length > 0 && wineData[0].tag_couleur !== undefined;
+      const warningMessage = !hasTagColumns ? `
+        <div style="background: rgba(255, 200, 100, 0.2); border: 1px solid rgba(255, 150, 0, 0.3); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: #8B4513;">
+          ⚠️ <strong>Colonnes de tags non détectées.</strong> Videz le cache du navigateur (Ctrl+Shift+R ou Cmd+Shift+R) pour voir les nouvelles colonnes du Google Sheets.
+        </div>
+      ` : '';
+
       let html = `
         <div class="wine-recommendations">
           <div class="reco-header">
@@ -1229,6 +1272,7 @@
             </svg>
             <h2 class="reco-title">Nos recommandations</h2>
           </div>
+          ${warningMessage}
 
           ${recommendations.map(wine => `
             <div class="wine-card">
