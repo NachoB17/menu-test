@@ -1,0 +1,41 @@
+Onglet,Section,Nom,Description,Prix,Actif,En ce moment,tag_couleur,tag_format,tag_moment,tag_style,tag_accord
+Vins,Verre rouge,AOP Terrasses du Larzac L'art du vers,"Bio, Mourvèdre, Syrah, Grenache",6€/32€,OUI,NON,rouge,verre,apero,puissant,viande_rouge
+vins,Verre rouge,Bachellery 2023,"domaine de Bachellery pinot noir IGP Pays d'oc – 12cl / 75cl",5€ / 28€,NON,NON,rouge,verre,apero,souple,viande_blanche
+vins,Bouteille rouge,Bachellery 2023,"IPG Pays d'oc, pinot noir",28€,OUI,NON,rouge,bouteille,plat,souple,viande_blanche
+vins,Verre rouge,Baroque La rouviole 2022,"AOC Minervois, syrah, cinsault – 12cl / 75cl",6€ / 28€,OUI,NON,rouge,verre,apero,souple,viande_blanche
+Vins,Bouteille blanc,Beaujolais-Lantignié 2024,"JP Dubost, Chardonnay",36€,OUI,NON,blanc,bouteille,plat,rond,viande_blanche
+Vins,Bouteille rouge,Brouilly 2023 appellation Brouilly contrôlée,"JP Dubost, Gamay",38,OUI,NON,rouge,bouteille,plat,souple,viande_blanche
+vins,Bouteille rouge,Chateau Barralière 2022,"AOP Côté de Provence, mourvèdre, syrah",28€,OUI,NON,rouge,bouteille,plat,puissant,viande_rouge
+Vins,Bouteille rouge,Coteaux Bourguignons 2023,"JP Dubost, cuvée Les Cerises, gamay",38,OUI,NON,rouge,bouteille,plat,souple,viande_blanche
+Vins,Bouteille rouge,CUVÉE Grenache3 Inebriati,"Grenache, Biodynamie/ nature",45€,OUI,NON,rouge,bouteille,degustation,nature,vegetarien
+Vins,Bouteille blanc,CUVÉE OREA Inebriati,"Pic st loup- Nerei-100% ugni blanc, Biodynamie",48€,OUI,NON,blanc,bouteille,degustation,nature,poisson
+vins,Bouteille blanc,Dansons sur la rive 2023,"Château la Dournie, IGP Pays d'Hérault, roussane, vermentino, viognier",28€,OUI,NON,blanc,bouteille,plat,rond,viande_blanche
+Vins,Bouteille rouge,David Duband bourgogne,"Pinot noir",44€,OUI,NON,rouge,bouteille,plat,souple,viande_blanche
+Vins,Verre blanc,Déesses muettes 2023 chardonnay,"IGP Saint Guilhem le désert, chardonnay, 12cl 75cl",5€/28€,OUI,OUI,blanc,verre,apero,rond,viande_blanche
+vins,Verre blanc,Déesses muettes 2023 viognier,"IGP Saint Guilhem le désert, viognier – 12cl / 75cl",5€ / 28€,OUI,NON,blanc,verre,apero,rond,viande_blanche
+vins,Verre rosé,Elégance 2023,"AOP Cote de Provence, grenache, cinsault, syrah – 12cl / 75cl",5€ / 28€,OUI,NON,rose,verre,apero,frais,poisson
+vins,Bouteille blanc,Féraud 2023,"AOP Cote de Provence, Folle",28€,OUI,NON,blanc,bouteille,plat,frais,poisson
+vins,Bouteille rouge,Garric l'argenteille 2020,"AOP Terrasse du Larzac, syrah, mourvèdre, grenache – 12cl / 75cl",38€,OUI,NON,rouge,bouteille,degustation,puissant,viande_rouge
+vins,Bouteille blanc,Goumandise 2023,"IGP Méditerranée, Ugni blanc, rolle",28€,OUI,NON,blanc,bouteille,plat,frais,poisson
+vins,Bouteille rouge,Gourmandise 2023,"IGP Méditerranée, merlot, syrah, grenache",28€,OUI,NON,rouge,bouteille,plat,souple,viande_blanche
+vins,Verre rosé,Grain de glace 2024,"AOP Cote de Provence, grenache, cinsault, syrah, rolle – 12cl / 75cl",5€ / 28€,NON,NON,rose,verre,apero,frais,poisson
+vins,Bouteille rouge,Grès 2013,"Clos Sorian, AOP Coteaux du Languedoc, grenache, syrah",38€,OUI,NON,rouge,bouteille,degustation,puissant,viande_rouge
+vins,Bouteille blanc,Le Versant 2023,"IGP Pays d'Oc, viognier",28€,OUI,NON,blanc,bouteille,plat,rond,viande_blanche
+vins,Bouteille rouge,Les Calcaires,"Cazeneuve 2022, AOP Pic Saint Loup, grenache, carignan, syrah, cinsault",38€,OUI,NON,rouge,bouteille,degustation,puissant,viande_rouge
+Vins,Verre blanc,Luneau Papin « Le verger »,"Muscadet, Biodynamie",7€ / 39€,OUI,NON,blanc,verre,apero,frais,poisson
+Vins,Verre blanc,Mâcon Milly Lamartine « Cuvée Alphonse »,"Bourgogne du sud, Chardonnay",7€/39€,OUI,NON,blanc,verre,apero,rond,viande_blanche
+vins,Verre rouge,Morgon domaine de la Bêche 2023,"gamay, beaujolais – 12cl / 75cl",6€ / 28€,OUI,NON,rouge,verre,apero,souple,viande_blanche
+Vins,Bouteille blanc,Orange Weinbach Alsace,,45€,OUI,NON,blanc,bouteille,degustation,orange,fromage
+vins,Bouteille rouge,Petit R 2022,"La Rouviole, IGP Pays d'Hérault, cabernet sauvignon, marselan, syrah, cinsault",28€,OUI,NON,rouge,bouteille,plat,puissant,viande_rouge
+vins,Bouteille rouge,Petite Ruche 2022,"AOP Crozes-Hermitages, syrah",42€,OUI,NON,rouge,bouteille,plat,puissant,viande_rouge
+Vins,Bouteille rouge,Pierre et Catherine Breton AOP Bourgueil Loire « Trinch »,"Cabernet, Biodynamie Nature",48,OUI,NON,rouge,bouteille,degustation,nature,vegetarien
+Vins,Verre blanc,Pierre et Catherine Breton cuvée « Pierres Rousses »,"100% Chenin, biody/nature",8€/39€,OUI,NON,blanc,verre,degustation,nature,fromage
+vins,Verre blanc,Pouilly-Fumé 2022,"Paul Corneau, AOP Pouilly-Fumé, sauvignon blanc – 12cl / 75cl",8€ / 39€,OUI,NON,blanc,verre,apero,frais,poisson
+vins,Verre rosé,Pouverel 2023,"AOP Cote de Provence, grenache, vermentino – 12cl / 75cl",5€ / 28€,OUI,NON,rose,verre,apero,frais,poisson
+vins,Bouteille blanc,Sancerre St Romble 2023,"AOP Sancerre, sauvignon blanc",42€,OUI,NON,blanc,bouteille,plat,frais,poisson
+vins,Verre rouge,Shebam 2023,"Château la dournie, grenache vieille vigne IGP pays d'Hérault – 12cl / 75cl",5€ / 28€,OUI,NON,rouge,verre,apero,souple,viande_blanche
+vins,Verre blanc,So 2023,"Clos Sorian AOP Languedoc, grenache, roussane – 12cl / 75cl",5€/ 30€,OUI,NON,blanc,verre,apero,rond,viande_blanche
+vins,Bouteille rouge,Sultanine 2023,"AOP Côte de provende, syrah, grenache",28€,OUI,NON,rouge,bouteille,plat,souple,viande_blanche
+vins,Bouteille blanc,Uby n•4 2023,"AOP Côte de Gascogne, gros et petit manseng",28€,OUI,NON,blanc,bouteille,plat,rond,viande_blanche
+Vins,Bouteille blanc,Vin Orange Pomone Amstramgram calmels et Joseph,"Languedoc bio, Roussane Marsanne Terret gris",30,OUI,NON,blanc,bouteille,degustation,orange,fromage
+vins,Verre blanc,Wizz 2022,"Château la Dournie, IGP Pays d'Hérault Monts de la Grage, grenache, vermentino – 12cl / 75cl",5€ / 28€,OUI,NON,blanc,verre,apero,frais,poisson
