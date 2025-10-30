@@ -206,6 +206,13 @@
       color: var(--text-secondary);
       transition: all 0.2s ease;
       font-family: 'Inter', sans-serif;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .clear-btn.visible{
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .clear-btn:hover{
@@ -989,222 +996,124 @@
     const qs = sel => document.querySelector(sel);
     const qsa = sel => Array.from(document.querySelectorAll(sel));
 
+    // SYSTÈME DYNAMIQUE - 4 QUESTIONS MAX
+    // Les questions utilisent les tags de la base de données (tag_couleur, tag_moment, tag_style, tag_accord)
+
     const wineQuestions = [
+      // Q1: Couleur (obligatoire)
       {
         id: 'color',
         question: 'Quelle couleur ?',
+        tag: 'tag_couleur',
         options: [
           { value: 'blanc', label: 'Blanc', icon: '🤍' },
           { value: 'rouge', label: 'Rouge', icon: '❤️' },
           { value: 'rose', label: 'Rosé', icon: '🌸' }
         ]
       },
+      // Q2: Moment (obligatoire)
       {
-        id: 'context',
+        id: 'moment',
         question: 'C\'est pour quel moment ?',
+        tag: 'tag_moment',
         options: [
-          { value: 'apero', label: 'À l\'apéritif' },
-          { value: 'plat', label: 'Avec un plat' },
-          { value: 'degustation', label: 'Pour déguster / découvrir' }
-        ]
-      }
-    ];
-
-    const blancQuestions = [
-      {
-        id: 'style_blanc',
-        question: 'Quel style en blanc ?',
-        options: [
-          { value: 'frais', label: 'Frais & Minéral', desc: 'Tension, vivacité, agrumes, salinité' },
-          { value: 'gras', label: 'Rond & Aromatique', desc: 'Fruits blancs, texture caressante' },
-          { value: 'atypique', label: 'Atypique / Macération', desc: 'Vin orange, peau, épices douces' }
+          { value: 'apero', label: 'À l\'apéritif', desc: 'Verres 12cl, légers et frais' },
+          { value: 'plat', label: 'Avec un plat', desc: 'Bouteilles pour accompagner' },
+          { value: 'degustation', label: 'Pour découvrir', desc: 'Vins nature, bio, terroir' }
         ]
       },
+      // Q3: Style (dépend de la couleur)
       {
-        id: 'intensite_blanc',
-        question: 'Plutôt légèreté ou structure ?',
-        show: (sel) => sel.style_blanc === 'frais' || sel.style_blanc === 'gras',
-        options: [
-          { value: 'leger', label: 'Léger & Désaltérant' },
-          { value: 'structure', label: 'Avec de la Structure' }
-        ]
-      }
-    ];
-
-    const blancPlatQuestions = [
-      {
-        id: 'accord_blanc',
-        question: 'Quel type de plat ?',
-        show: (sel) => sel.context === 'plat' && sel.color === 'blanc',
-        options: [
-          { value: 'poisson', label: 'Poisson / Fruits de Mer' },
-          { value: 'viande_blanche', label: 'Viande Blanche / Volaille' },
-          { value: 'vegetarien', label: 'Végétarien / Fromage' }
-        ]
-      }
-    ];
-
-    const rougeQuestions = [
-      {
-        id: 'style_rouge',
-        question: 'Quel style en rouge ?',
-        options: [
-          { value: 'souple', label: 'Fruits & Souplesse', desc: 'Croquant, facile à boire' },
-          { value: 'puissant', label: 'Puissant & Structuré', desc: 'Tanins, épices, garrigue' },
-          { value: 'nature', label: 'Nature / Biodynamie', desc: 'Authenticité, terroir vivant' }
-        ]
-      },
-      {
-        id: 'caractere',
-        question: 'Quel caractère ?',
-        show: (sel) => sel.style_rouge === 'souple' || sel.style_rouge === 'puissant',
+        id: 'style',
+        question: (sel) => {
+          if (sel.color === 'blanc') return 'Quel style en blanc ?';
+          if (sel.color === 'rouge') return 'Quel style en rouge ?';
+          return 'Quel style ?';
+        },
+        tag: 'tag_style',
+        show: (sel) => sel.color !== 'rose', // Rosé = skip (tous frais)
         options: (sel) => {
-          if (sel.style_rouge === 'souple') {
+          if (sel.color === 'blanc') {
             return [
-              { value: 'fruit', label: 'Fruits Rouges & Gourmand' },
-              { value: 'elegance', label: 'Élégance & Finesse' }
+              { value: 'frais', label: 'Frais & Minéral', desc: 'Sauvignon, Muscadet, salinité' },
+              { value: 'rond', label: 'Rond & Aromatique', desc: 'Chardonnay, fruits blancs' },
+              { value: 'orange', label: 'Orange / Macération', desc: 'Vins atypiques, nature' }
             ];
           }
-          return [
-            { value: 'epice', label: 'Épices & Garrigue' },
-            { value: 'terroir', label: 'Expression du Terroir' }
-          ];
+          if (sel.color === 'rouge') {
+            return [
+              { value: 'souple', label: 'Souple & Fruité', desc: 'Gamay, Pinot, croquant' },
+              { value: 'puissant', label: 'Puissant & Structuré', desc: 'Syrah, tanins, garrigue' },
+              { value: 'nature', label: 'Nature / Bio', desc: 'Biodynamie, terroir vivant' }
+            ];
+          }
+          return [];
         }
       },
+      // Q4: Accord (optionnel, uniquement si "plat")
       {
-        id: 'origine_nature',
-        question: 'Quelle origine ?',
-        show: (sel) => sel.style_rouge === 'nature',
-        options: [
-          { value: 'loire', label: 'Loire (Cabernet Franc, Chenin)' },
-          { value: 'sud', label: 'Sud (Grenache, Syrah, Mourvèdre)' }
-        ]
-      }
-    ];
-
-    const rougePlatQuestions = [
-      {
-        id: 'accord_rouge',
+        id: 'accord',
         question: 'Quel type de plat ?',
-        show: (sel) => sel.context === 'plat' && sel.color === 'rouge',
+        tag: 'tag_accord',
+        show: (sel) => sel.moment === 'plat',
         options: [
-          { value: 'viande_rouge', label: 'Viande Rouge / Gibier' },
-          { value: 'viande_blanche', label: 'Viande Blanche / Volaille' },
-          { value: 'vegetarien', label: 'Végétarien / Légumes' }
+          { value: 'poisson', label: 'Poisson / Fruits de mer' },
+          { value: 'viande_blanche', label: 'Viande blanche / Volaille' },
+          { value: 'viande_rouge', label: 'Viande rouge / Gibier' },
+          { value: 'fromage', label: 'Fromage / Végétarien' }
         ]
       }
     ];
 
+    // SYSTÈME DYNAMIQUE - Scoring basé sur les tags de la base de données
     const getWinesByPath = (selections) => {
-      const { color, context, style_blanc, intensite_blanc, style_rouge, caractere, origine_nature, accord_blanc, accord_rouge } = selections;
-      
-      let filtered = wineData.filter(w => {
-        const section = normalize(w.Section || '');
-        if (color === 'rose' && !section.includes('rose')) return false;
-        if (color === 'blanc' && !section.includes('blanc')) return false;
-        if (color === 'rouge' && !section.includes('rouge')) return false;
-        return true;
-      });
+      const { color, moment, style, accord } = selections;
 
-      const contextKw = {
-        apero: ['verre', 'apéritif', 'léger', 'frais', 'croquant'],
-        plat: ['bouteille', 'gastronomique', 'structure', 'puissant'],
-        degustation: ['bio', 'biodynamie', 'nature', 'terroir', 'vieilles vignes']
-      };
-
-      const blancStyleKw = {
-        frais: ['frais', 'minéral', 'vif', 'salin', 'iodé', 'tension', 'citron', 'agrumes'],
-        gras: ['rond', 'gras', 'riche', 'aromatique', 'fruits blancs', 'floral'],
-        atypique: ['orange', 'macération', 'nature', 'biodynamie', 'atypique']
-      };
-
-      const rougeStyleKw = {
-        souple: ['souple', 'gamay', 'croquant', 'fruits rouges', 'gourmand', 'facile'],
-        puissant: ['puissant', 'structure', 'tanins', 'syrah', 'mourvèdre', 'épices', 'garrigue'],
-        nature: ['nature', 'bio', 'biodynamie', 'cabernet franc', 'grenache']
-      };
-
-      const accordBlancKw = {
-        poisson: ['muscadet', 'iodé', 'salin', 'fruits de mer', 'minéral'],
-        viande_blanche: ['chardonnay', 'rond', 'gras', 'volaille'],
-        vegetarien: ['frais', 'minéral', 'léger', 'biodynamie']
-      };
-
-      const accordRougeKw = {
-        viande_rouge: ['puissant', 'structure', 'tanins', 'syrah', 'crozes', 'terroir'],
-        viande_blanche: ['souple', 'élégant', 'gamay', 'pinot noir'],
-        vegetarien: ['souple', 'fruits', 'léger', 'bio']
-      };
-
-      filtered = filtered.map(wine => {
-        const txt = normalize(`${wine.Section} ${wine.Nom} ${wine.Description}`);
+      // Filtrer les vins actifs et scorer selon les tags
+      let scored = wineData.map(wine => {
         let score = 0;
 
-        if (context && contextKw[context]) {
-          score += contextKw[context].filter(k => txt.includes(k)).length * 2;
+        // Match tag_couleur (poids: 10) - obligatoire
+        if (color && normalize(wine.tag_couleur || '') === normalize(color)) {
+          score += 10;
         }
-        if (color === 'blanc' && style_blanc && blancStyleKw[style_blanc]) {
-          score += blancStyleKw[style_blanc].filter(k => txt.includes(k)).length * 3;
+
+        // Match tag_moment (poids: 8) - obligatoire
+        if (moment && normalize(wine.tag_moment || '') === normalize(moment)) {
+          score += 8;
         }
-        if (color === 'rouge' && style_rouge && rougeStyleKw[style_rouge]) {
-          score += rougeStyleKw[style_rouge].filter(k => txt.includes(k)).length * 3;
+
+        // Match tag_style (poids: 6) - conditionnel
+        if (style && normalize(wine.tag_style || '') === normalize(style)) {
+          score += 6;
         }
-        if (accord_blanc && accordBlancKw[accord_blanc]) {
-          score += accordBlancKw[accord_blanc].filter(k => txt.includes(k)).length * 4;
+
+        // Match tag_accord (poids: 5) - optionnel
+        if (accord && normalize(wine.tag_accord || '') === normalize(accord)) {
+          score += 5;
         }
-        if (accord_rouge && accordRougeKw[accord_rouge]) {
-          score += accordRougeKw[accord_rouge].filter(k => txt.includes(k)).length * 4;
-        }
-        if (intensite_blanc === 'leger' && (txt.includes('verre') || txt.includes('léger'))) score += 2;
-        if (intensite_blanc === 'structure' && (txt.includes('bouteille') || txt.includes('structure'))) score += 2;
-        if (caractere === 'fruit' && txt.includes('fruit')) score += 2;
-        if (caractere === 'elegance' && (txt.includes('élégant') || txt.includes('finesse'))) score += 2;
-        if (caractere === 'epice' && (txt.includes('épice') || txt.includes('garrigue'))) score += 2;
-        if (caractere === 'terroir' && txt.includes('terroir')) score += 2;
-        if (origine_nature === 'loire' && txt.includes('loire')) score += 3;
-        if (origine_nature === 'sud' && (txt.includes('languedoc') || txt.includes('pic saint loup'))) score += 3;
 
         return { wine, score };
       });
 
-      filtered.sort((a, b) => b.score - a.score);
-      
-      const verreWines = filtered.filter(w => {
-        const sec = normalize(w.wine.Section || '');
-        const desc = normalize(w.wine.Description || '');
-        return sec.includes('verre') || desc.includes('12cl');
-      });
-      
-      const bouteilleWines = filtered.filter(w => {
-        const sec = normalize(w.wine.Section || '');
-        const desc = normalize(w.wine.Description || '');
-        return !sec.includes('verre') && !desc.includes('12cl');
-      });
-      
-      const prioritized = [...verreWines, ...bouteilleWines];
-      const recommendations = prioritized.filter(w => w.score > 0).slice(0, 6);
-      
-      if (recommendations.length === 0) {
-        return prioritized.slice(0, 4).map(w => w.wine);
+      // Filtrer uniquement les vins avec score > 0 et trier par score décroissant
+      scored = scored.filter(w => w.score > 0).sort((a, b) => b.score - a.score);
+
+      // Si pas assez de résultats, retourner des vins de la bonne couleur
+      if (scored.length < 3) {
+        const fallback = wineData.filter(w =>
+          color && normalize(w.tag_couleur || '') === normalize(color)
+        ).slice(0, 6);
+        return fallback;
       }
-      
-      return recommendations.map(w => w.wine);
+
+      // Retourner les 6 meilleurs vins
+      return scored.slice(0, 6).map(w => w.wine);
     };
 
+    // Filtrer les questions selon les sélections actuelles
     const getWineQuestions = () => {
-      let questions = [...wineQuestions];
-      if (wineTreeSelections.color === 'blanc') {
-        questions = [...questions, ...blancQuestions];
-        if (wineTreeSelections.context === 'plat') {
-          questions = [...questions, ...blancPlatQuestions];
-        }
-      } else if (wineTreeSelections.color === 'rouge') {
-        questions = [...questions, ...rougeQuestions];
-        if (wineTreeSelections.context === 'plat') {
-          questions = [...questions, ...rougePlatQuestions];
-        }
-      }
-      return questions.filter(q => !q.show || q.show(wineTreeSelections));
+      return wineQuestions.filter(q => !q.show || q.show(wineTreeSelections));
     };
 
     const renderWineTree = () => {
@@ -1225,6 +1134,7 @@
 
       const currentQ = questions[wineTreeStep];
       const options = typeof currentQ.options === 'function' ? currentQ.options(wineTreeSelections) : currentQ.options;
+      const questionText = typeof currentQ.question === 'function' ? currentQ.question(wineTreeSelections) : currentQ.question;
 
       let html = `
         <div class="wine-tree">
@@ -1234,14 +1144,14 @@
             </svg>
             <h2 class="wine-tree-title">Guide de sélection des vins</h2>
           </div>
-          
+
           <div class="progress-bar">
             ${questions.map((_, idx) => `<div class="progress-step ${idx <= wineTreeStep ? 'active' : ''}"></div>`).join('')}
           </div>
-          
+
           <div class="progress-info">Étape ${wineTreeStep + 1} sur ${questions.length}</div>
-          
-          <h3 class="question-title">${currentQ.question}</h3>
+
+          <h3 class="question-title">${questionText}</h3>
           
           <div class="wine-options">
             ${options.map(opt => `
@@ -1634,13 +1544,43 @@
         });
       });
 
-      qs('#searchBox').addEventListener('input', (e) => {
+      const searchBox = qs('#searchBox');
+      const clearBtn = qs('#clearSearch');
+
+      // Bouton croix visible uniquement au focus/contenu
+      searchBox.addEventListener('focus', () => {
+        clearBtn.classList.add('visible');
+      });
+
+      searchBox.addEventListener('blur', () => {
+        setTimeout(() => {
+          if (!searchBox.value.trim()) {
+            clearBtn.classList.remove('visible');
+          }
+        }, 200);
+      });
+
+      searchBox.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
         const query = e.target.value.trim();
-        if (!query){ clearSearch(); return; }
+
+        if (query) {
+          clearBtn.classList.add('visible');
+        }
+
+        if (!query){
+          clearSearch();
+          clearBtn.classList.remove('visible');
+          return;
+        }
         searchTimeout = setTimeout(() => performSearch(query), 250);
       });
-      qs('#clearSearch').addEventListener('click', clearSearch);
+
+      clearBtn.addEventListener('click', () => {
+        clearSearch();
+        clearBtn.classList.remove('visible');
+        searchBox.blur();
+      });
       qs('#retryBtn').addEventListener('click', () => ensurePapa().then(fetchCSVAndRender).catch(showError));
 
       const share = qs('#btnShare');
@@ -1655,28 +1595,23 @@
       ensurePapa().then(fetchCSVAndRender).catch(showError);
     };
 
-    // Placeholder dynamique
+    // Placeholder dynamique - UN SEUL produit, rotation 5s
     const updatePlaceholder = () => {
       const searchBox = qs('#searchBox');
       if (!searchBox || !allMenuData.length) return;
 
       const nowItems = allMenuData.filter(i => normalize(i['En ce moment']) === 'oui');
       if (nowItems.length > 0) {
-        const randomItems = [];
-        const itemCount = Math.min(3, nowItems.length);
-        const shuffled = [...nowItems].sort(() => Math.random() - 0.5);
-
-        for (let i = 0; i < itemCount; i++) {
-          randomItems.push(shuffled[i].Nom);
-        }
-
-        searchBox.placeholder = `Rechercher… (ex: ${randomItems.join(', ')})`;
+        // UN SEUL produit aléatoire
+        const randomIndex = Math.floor(Math.random() * nowItems.length);
+        const randomProduct = nowItems[randomIndex].Nom;
+        searchBox.placeholder = `Rechercher… (ex: ${randomProduct})`;
       }
     };
 
     const startPlaceholderRotation = () => {
       updatePlaceholder();
-      placeholderInterval = setInterval(updatePlaceholder, 8000);
+      placeholderInterval = setInterval(updatePlaceholder, 5000); // 5 secondes
     };
 
     // Gestion du Splash Screen
