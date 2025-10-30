@@ -342,8 +342,8 @@
     }
 
     .item-name{
-      font-size: 1.125rem;
-      font-weight: 500;
+      font-size: 1.375rem;
+      font-weight: 600;
       color: var(--text-primary);
       letter-spacing: -0.01em;
       line-height: 1.4;
@@ -760,12 +760,14 @@
       }
 
       .menu-item{
-        flex-direction: column;
+        flex-direction: row;
+        align-items: flex-start;
         gap: var(--space-md);
       }
 
       .item-price{
-        align-self: flex-end;
+        flex-shrink: 0;
+        margin-top: 0;
       }
 
       .wine-card-header{
@@ -834,9 +836,106 @@
         width: 100%;
       }
     }
+
+    /* Splash Screen Premium */
+    #splashScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--deep-sage) 0%, var(--sage-medium) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    #splashScreen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .splash-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.2));
+      animation: splashPulse 2s ease-in-out infinite;
+    }
+
+    .splash-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem;
+      color: var(--cream);
+      margin-top: var(--space-xl);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .splash-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--soft-gold);
+      margin-top: var(--space-sm);
+      letter-spacing: 0.1em;
+      font-weight: 400;
+    }
+
+    .splash-loader {
+      width: 40px;
+      height: 40px;
+      margin-top: var(--space-xl);
+      border: 3px solid rgba(197, 183, 143, 0.3);
+      border-top-color: var(--soft-gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes splashPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .splash-logo {
+        width: 100px;
+        height: 100px;
+      }
+
+      .splash-text {
+        font-size: 2rem;
+      }
+
+      .splash-subtitle {
+        font-size: 0.875rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Splash Screen -->
+  <div id="splashScreen">
+    <img src="https://raw.githubusercontent.com/maison-fleurie/Menu/main/logo.png" alt="Maison Fleurie" class="splash-logo" />
+    <h1 class="splash-text">Maison Fleurie</h1>
+    <p class="splash-subtitle">Table des Mets • Cocktails • Vins</p>
+    <div class="splash-loader"></div>
+  </div>
   <header class="header" role="banner">
     <h1 class="header-title"><span>MAISON</span>
       <img src="https://raw.githubusercontent.com/maison-fleurie/Menu/main/logo.png" alt="Logo Maison Fleurie" class="header-logo" />
@@ -897,6 +996,7 @@
 
     let allMenuData = [], wineData = [], currentTab = 'now', isSearching = false, searchTimeout;
     let wineTreeStep = 0, wineTreeSelections = {}, showingWineList = false;
+    let lastQuery = '', lastSearchResults = [], placeholderInterval;
 
     const normalize = (s='') => s.toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
     const tabIdFromOnglet = (s='') => normalize(s).replace(/\s/g,'');
@@ -1440,6 +1540,8 @@
       allMenuData = cleaned.filter(i => normalize(i.Actif) === 'oui' || normalize(i['Actif '])==='oui');
       wineData = allMenuData.filter(i => normalize(i.Onglet).includes('vin'));
       renderAll();
+      startPlaceholderRotation();
+      hideSplashScreen();
     };
 
     const loadFromCacheIfFresh = () => {
@@ -1493,10 +1595,9 @@
       }
     };
 
-    let lastQuery = '', lastSearchResults = [];
-
     const performSearch = (query) => {
-      isSearching = true; lastQuery = query;
+      isSearching = true;
+      lastQuery = query;
       const q = normalize(query);
       const results = allMenuData.filter(i =>
         normalize(i.Nom).includes(q) || normalize(i.Description).includes(q) || normalize(i.Section).includes(q)
@@ -1505,6 +1606,34 @@
       const info = qs('#searchInfo');
       info.style.display = 'block';
       info.textContent = `${results.length} résultat(s) pour "${query}"`;
+
+      // Afficher les résultats dans le panneau actif
+      renderSearchResults(results);
+    };
+
+    const renderSearchResults = (results) => {
+      const activePanel = qs('.tab-content.active');
+      if (!activePanel) return;
+
+      if (!results.length) {
+        activePanel.innerHTML = `<div class="empty-state"><h3>Aucun résultat</h3><p>Essayez avec un autre terme de recherche</p></div>`;
+        return;
+      }
+
+      // Grouper les résultats par section
+      const groups = new Map();
+      for (const item of results) {
+        const key = item.Section || 'Autres';
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(item);
+      }
+
+      let html = '';
+      for (const [section, items] of groups) {
+        html += `<h2 class="section-title">${section}</h2>`;
+        items.sort(byNameFR).forEach(item => { html += createItemHTML(item); });
+      }
+      activePanel.innerHTML = html;
     };
 
     const clearSearch = () => {
@@ -1546,6 +1675,57 @@
 
       ensurePapa().then(fetchCSVAndRender).catch(showError);
     };
+
+    // Placeholder dynamique
+    const updatePlaceholder = () => {
+      const searchBox = qs('#searchBox');
+      if (!searchBox || !allMenuData.length) return;
+
+      const nowItems = allMenuData.filter(i => normalize(i['En ce moment']) === 'oui');
+      if (nowItems.length > 0) {
+        const randomItems = [];
+        const itemCount = Math.min(3, nowItems.length);
+        const shuffled = [...nowItems].sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < itemCount; i++) {
+          randomItems.push(shuffled[i].Nom);
+        }
+
+        searchBox.placeholder = `Rechercher… (ex: ${randomItems.join(', ')})`;
+      }
+    };
+
+    const startPlaceholderRotation = () => {
+      updatePlaceholder();
+      placeholderInterval = setInterval(updatePlaceholder, 8000);
+    };
+
+    // Gestion du Splash Screen
+    let splashTimeout;
+    const hideSplashScreen = () => {
+      const splash = qs('#splashScreen');
+      if (!splash) return;
+
+      // Attendre au minimum 2 secondes pour l'effet premium
+      const minDisplayTime = 2000;
+      const elapsed = Date.now() - (window.splashStartTime || 0);
+      const remainingTime = Math.max(0, minDisplayTime - elapsed);
+
+      setTimeout(() => {
+        splash.classList.add('fade-out');
+        setTimeout(() => {
+          splash.style.display = 'none';
+        }, 500);
+      }, remainingTime);
+    };
+
+    // Enregistrer l'heure de début au chargement de la page
+    window.splashStartTime = Date.now();
+
+    // Fallback : cacher le splash après 5 secondes maximum
+    window.addEventListener('load', () => {
+      splashTimeout = setTimeout(hideSplashScreen, 5000);
+    });
 
     document.addEventListener('DOMContentLoaded', init);
   </script>
