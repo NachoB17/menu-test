@@ -206,6 +206,13 @@
       color: var(--text-secondary);
       transition: all 0.2s ease;
       font-family: 'Inter', sans-serif;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .clear-btn.visible{
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .clear-btn:hover{
@@ -1634,13 +1641,45 @@
         });
       });
 
-      qs('#searchBox').addEventListener('input', (e) => {
+      const searchBox = qs('#searchBox');
+      const clearBtn = qs('#clearSearch');
+
+      // Montrer/cacher le bouton croix selon focus et contenu
+      searchBox.addEventListener('focus', () => {
+        clearBtn.classList.add('visible');
+      });
+
+      searchBox.addEventListener('blur', () => {
+        // Cacher seulement si la recherche est vide
+        setTimeout(() => {
+          if (!searchBox.value.trim()) {
+            clearBtn.classList.remove('visible');
+          }
+        }, 200); // Délai pour permettre le clic sur le bouton
+      });
+
+      searchBox.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
         const query = e.target.value.trim();
-        if (!query){ clearSearch(); return; }
+
+        // Montrer le bouton s'il y a du texte
+        if (query) {
+          clearBtn.classList.add('visible');
+        }
+
+        if (!query){
+          clearSearch();
+          clearBtn.classList.remove('visible');
+          return;
+        }
         searchTimeout = setTimeout(() => performSearch(query), 250);
       });
-      qs('#clearSearch').addEventListener('click', clearSearch);
+
+      clearBtn.addEventListener('click', () => {
+        clearSearch();
+        clearBtn.classList.remove('visible');
+        searchBox.blur(); // Retirer le focus après clear
+      });
       qs('#retryBtn').addEventListener('click', () => ensurePapa().then(fetchCSVAndRender).catch(showError));
 
       const share = qs('#btnShare');
@@ -1655,22 +1694,18 @@
       ensurePapa().then(fetchCSVAndRender).catch(showError);
     };
 
-    // Placeholder dynamique
+    // Placeholder dynamique - UN SEUL produit à la fois
     const updatePlaceholder = () => {
       const searchBox = qs('#searchBox');
       if (!searchBox || !allMenuData.length) return;
 
       const nowItems = allMenuData.filter(i => normalize(i['En ce moment']) === 'oui');
       if (nowItems.length > 0) {
-        const randomItems = [];
-        const itemCount = Math.min(3, nowItems.length);
-        const shuffled = [...nowItems].sort(() => Math.random() - 0.5);
+        // Sélectionner UN SEUL produit aléatoire
+        const randomIndex = Math.floor(Math.random() * nowItems.length);
+        const randomProduct = nowItems[randomIndex].Nom;
 
-        for (let i = 0; i < itemCount; i++) {
-          randomItems.push(shuffled[i].Nom);
-        }
-
-        searchBox.placeholder = `Rechercher… (ex: ${randomItems.join(', ')})`;
+        searchBox.placeholder = `Rechercher… (ex: ${randomProduct})`;
       }
     };
 
