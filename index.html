@@ -860,37 +860,18 @@
     }
 
     .splash-logo {
-      width: 120px;
-      height: 120px;
+      width: 320px;
+      max-width: 85vw;
+      height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.3));
       animation: splashPulse 2s ease-in-out infinite;
-    }
-
-    .splash-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.5rem;
-      color: var(--cream);
-      margin-top: var(--space-xl);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-weight: 300;
-      text-align: center;
-    }
-
-    .splash-subtitle {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      color: var(--soft-gold);
-      margin-top: var(--space-sm);
-      letter-spacing: 0.1em;
-      font-weight: 400;
     }
 
     .splash-loader {
       width: 40px;
       height: 40px;
-      margin-top: var(--space-xl);
+      margin-top: var(--space-2xl);
       border: 3px solid rgba(197, 183, 143, 0.3);
       border-top-color: var(--soft-gold);
       border-radius: 50%;
@@ -900,9 +881,11 @@
     @keyframes splashPulse {
       0%, 100% {
         transform: scale(1);
+        opacity: 0.95;
       }
       50% {
-        transform: scale(1.05);
+        transform: scale(1.02);
+        opacity: 1;
       }
     }
 
@@ -914,16 +897,13 @@
 
     @media (max-width: 768px) {
       .splash-logo {
-        width: 100px;
-        height: 100px;
+        width: 280px;
       }
+    }
 
-      .splash-text {
-        font-size: 2rem;
-      }
-
-      .splash-subtitle {
-        font-size: 0.875rem;
+    @media (max-width: 480px) {
+      .splash-logo {
+        width: 240px;
       }
     }
   </style>
@@ -931,9 +911,7 @@
 <body>
   <!-- Splash Screen -->
   <div id="splashScreen">
-    <img src="https://raw.githubusercontent.com/maison-fleurie/Menu/main/logo.png" alt="Maison Fleurie" class="splash-logo" />
-    <h1 class="splash-text">Maison Fleurie</h1>
-    <p class="splash-subtitle">Table des Mets • Cocktails • Vins</p>
+    <img src="./logo_chargement.png" alt="Maison Fleurie" class="splash-logo" />
     <div class="splash-loader"></div>
   </div>
   <header class="header" role="banner">
