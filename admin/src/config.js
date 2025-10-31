@@ -18,7 +18,7 @@ export const CONFIG = {
   GOOGLE_API_KEY: import.meta.env.VITE_GOOGLE_API_KEY || 'AIzaSyC7BZ9vkBlGsq9H8poksOycTmslPdDXLpU',
 
   // Nom de l'onglet (tab) dans le Google Sheet
-  SHEET_TAB_NAME: 'Feuille 1',
+  SHEET_TAB_NAME: 'Menu',
 
   // Liste blanche des emails autorisés (max 10 pour commencer)
   AUTHORIZED_EMAILS: [
