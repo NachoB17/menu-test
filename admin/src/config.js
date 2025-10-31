@@ -4,16 +4,18 @@
 // Instructions détaillées fournies dans SETUP.md
 
 export const CONFIG = {
-  // ID Google Cloud OAuth Client (vous le créerez dans Google Cloud Console)
-  // Format : "XXXXXX.apps.googleusercontent.com"
-  GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
+  // ID Google Cloud OAuth Client
+  // ⚠️ Clés en dur pour déploiement GitHub Pages
+  // Sécurisé car API Key restreinte par domaine dans Google Cloud Console
+  GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID || '63527306931-njs2urcb2bvgipb47kl60emjj5fmnchj.apps.googleusercontent.com',
 
   // ID de votre Google Sheet
   // Trouvez-le dans l'URL : https://docs.google.com/spreadsheets/d/[ID_ICI]/edit
   GOOGLE_SHEET_ID: '1lgd-rGS2kLCn0yPtGMc7RyMDue-YERmKOjNT3QKgJ3Y',
 
-  // API Key Google (vous la créerez dans Google Cloud Console)
-  GOOGLE_API_KEY: import.meta.env.VITE_GOOGLE_API_KEY || '',
+  // API Key Google
+  // ⚠️ Clé restreinte par domaine (GitHub Pages) dans Google Cloud Console
+  GOOGLE_API_KEY: import.meta.env.VITE_GOOGLE_API_KEY || 'AIzaSyC7BZ9vkBlGsq9H8poksOycTmslPdDXLpU',
 
   // Nom de l'onglet (tab) dans le Google Sheet
   SHEET_TAB_NAME: 'Feuille 1',
