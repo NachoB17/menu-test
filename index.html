@@ -115,8 +115,8 @@
     }
 
     .header-logo{
-      height: 3.25rem;
-      width: 3.25rem;
+      height: 2.6rem;
+      width: 2.6rem;
       object-fit: contain;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
       transition: transform 0.3s ease;
@@ -747,8 +747,8 @@
       }
 
       .header-logo{
-        height: 2.75rem;
-        width: 2.75rem;
+        height: 2.2rem;
+        width: 2.2rem;
       }
 
       .header-subtitle{
@@ -826,8 +826,8 @@
       }
 
       .header-logo{
-        height: 2.5rem;
-        width: 2.5rem;
+        height: 2rem;
+        width: 2rem;
       }
 
       main.container{
@@ -913,6 +913,18 @@
         width: 240px;
       }
     }
+
+    /* Footer */
+    footer.footer{
+      text-align: center;
+      padding: var(--space-lg);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: var(--warm-white);
+      border-top: 1px solid rgba(26, 46, 37, 0.08);
+      margin-top: var(--space-xl);
+    }
   </style>
 </head>
 <body>
@@ -971,6 +983,10 @@
       <button id="retryBtn">🔄 Réessayer</button>
     </div>
   </main>
+
+  <footer class="footer">
+    Net ttc et service compris
+  </footer>
 
   <script>
     if (typeof window !== 'undefined' && typeof window.invoke === 'undefined') {
