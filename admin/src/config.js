@@ -20,9 +20,9 @@ export const CONFIG = {
 
   // Liste blanche des emails autorisés (max 10 pour commencer)
   AUTHORIZED_EMAILS: [
-    // Ajoutez les emails de vos gérants ici
-    // Exemple : 'gerant1@example.com',
-    //           'gerant2@example.com',
+    'adresse.speciale.17@gmail.com',
+    // Ajoutez d'autres emails de gérants ici si besoin
+    // Exemple : 'gerant2@example.com',
   ],
 
   // Tags disponibles pour les vins
