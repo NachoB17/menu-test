@@ -35,4 +35,30 @@ body {
   .card {
     @apply bg-white rounded-lg shadow-md p-4 border border-gray-100;
   }
+
+  /* Animation fade-in */
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Masquer la scrollbar tout en gardant le scroll fonctionnel */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
