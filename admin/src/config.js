@@ -11,7 +11,7 @@ export const CONFIG = {
 
   // ID de votre Google Sheet
   // Trouvez-le dans l'URL : https://docs.google.com/spreadsheets/d/[ID_ICI]/edit
-  GOOGLE_SHEET_ID: '1lgd-rGS2kLCn0yPtGMc7RyMDue-YERmKOjNT3QKgJ3Y',
+  GOOGLE_SHEET_ID: '13ikPOnJFsJdFlbe41un9nWriO7YQ1E2ARz-NnG4CAeM',
 
   // API Key Google
   // ⚠️ Clé restreinte par domaine (GitHub Pages) dans Google Cloud Console
