@@ -684,6 +684,71 @@
       background: linear-gradient(180deg, rgba(250, 248, 244, 0.4) 0%, rgba(255, 255, 255, 0.8) 100%);
       transition: all 0.25s ease;
       box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .wine-card-badges{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .wine-badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border-radius: 999px;
+      padding: 0.3rem 0.75rem;
+      background: rgba(26, 46, 37, 0.08);
+      color: var(--text-primary);
+    }
+
+    .wine-badge::before{
+      content: '\2728';
+      font-size: 0.75rem;
+    }
+
+    .wine-badge-reco{
+      background: linear-gradient(120deg, rgba(197, 183, 143, 0.9), rgba(155, 139, 108, 0.85));
+      color: #fff;
+      box-shadow: 0 6px 12px rgba(155, 139, 108, 0.22);
+    }
+
+    .wine-badge-reco::before{
+      content: '\1F31F';
+    }
+
+    .wine-badge-glass{
+      background: rgba(61, 90, 76, 0.12);
+      color: var(--sage-medium);
+    }
+
+    .wine-badge-glass::before{
+      content: '\1F377';
+    }
+
+    .wine-badge-local{
+      background: rgba(250, 248, 244, 0.9);
+      border: 1px solid rgba(197, 183, 143, 0.45);
+    }
+
+    .wine-badge-local::before{
+      content: '\1F3E1';
+    }
+
+    .wine-badge-discovery{
+      background: rgba(26, 46, 37, 0.1);
+      color: var(--text-primary);
+    }
+
+    .wine-badge-discovery::before{
+      content: '\1F9ED';
     }
 
     .wine-card:hover{
@@ -1014,124 +1079,304 @@
     const qs = sel => document.querySelector(sel);
     const qsa = sel => Array.from(document.querySelectorAll(sel));
 
-    // SYSTÈME DYNAMIQUE - 4 QUESTIONS MAX
-    // Les questions utilisent les tags de la base de données (tag_couleur, tag_moment, tag_style, tag_accord)
+    // --- Guide de sélection des vins ---
+    const getWineTag = (wine, key) => {
+      if (!wine || !key) return '';
+      if (Object.prototype.hasOwnProperty.call(wine, key)) return wine[key];
+      if (key.includes('-')) {
+        const alt = key.replace(/-/g, '_');
+        if (Object.prototype.hasOwnProperty.call(wine, alt)) return wine[alt];
+      }
+      if (key.includes('_')) {
+        const alt = key.replace(/_/g, '-');
+        if (Object.prototype.hasOwnProperty.call(wine, alt)) return wine[alt];
+      }
+      return wine[key] || '';
+    };
 
-    const wineQuestions = [
-      // Q1: Couleur (obligatoire)
-      {
-        id: 'color',
-        question: 'Quelle couleur ?',
-        tag: 'tag_couleur',
-        options: [
-          { value: 'blanc', label: 'Blanc', icon: '🤍' },
-          { value: 'rouge', label: 'Rouge', icon: '❤️' },
-          { value: 'rose', label: 'Rosé', icon: '🌸' }
-        ]
-      },
-      // Q2: Moment (obligatoire)
-      {
-        id: 'moment',
-        question: 'C\'est pour quel moment ?',
-        tag: 'tag_moment',
-        options: [
-          { value: 'apero', label: 'À l\'apéritif', desc: 'Verres 12cl, légers et frais' },
-          { value: 'plat', label: 'Avec un plat', desc: 'Bouteilles pour accompagner' },
-          { value: 'degustation', label: 'Pour découvrir', desc: 'Vins nature, bio, terroir' }
-        ]
-      },
-      // Q3: Style (dépend de la couleur)
+    const toTitle = (value = '') => value.split(/\s+/).filter(Boolean).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
+    const canonicalSubstyle = (raw = '') => {
+      let norm = normalize(raw);
+      if (!norm) return '';
+      if (norm.startsWith('sec ')) norm = norm.replace(/^sec\s+/, '');
+      return norm;
+    };
+
+    const SUBSTYLE_META = {
+      fruite: { label: 'Sec fruité', desc: 'Gourmand, notes de fruits blancs et jaunes.' },
+      sec: { label: 'Sec sec', desc: 'Profil très droit, vif et désaltérant.' },
+      mineral: { label: 'Sec minéral', desc: 'Salinité, pierre à fusil, tension élégante.' },
+      rond: { label: 'Sec rond', desc: 'Ampleur, notes beurrées et texture veloutée.' }
+    };
+    const SUBSTYLE_ORDER = ['fruite', 'sec', 'mineral', 'rond'];
+    const getSubstyleMeta = (norm, raw = '') => {
+      const meta = SUBSTYLE_META[norm];
+      if (meta) return meta;
+      return { label: toTitle(raw || norm), desc: '' };
+    };
+
+    const PROVENANCE_META = {
+      local: { label: 'Sélection locale', desc: 'Vignerons du Languedoc & Occitanie.', icon: '🏡' },
+      decouverte: { label: 'Escapade & découverte', desc: 'Autres régions & voyages gustatifs.', icon: '🧭' }
+    };
+    const PROVENANCE_ORDER = ['local', 'decouverte'];
+    const PROVENANCE_LOCAL_KEYWORDS = ['local', 'languedoc', 'occitanie', 'herault', 'hérault', 'pic', 'montpellier', 'gard'];
+    const PROVENANCE_DISCOVERY_KEYWORDS = ['decouverte', 'découverte', 'voyage', 'ailleurs', 'autre'];
+    const getProvenanceMeta = (group) => PROVENANCE_META[group] || { label: toTitle(group), desc: '', icon: '' };
+    const classifyProvenanceGroup = (wine) => {
+      const raw = getWineTag(wine, 'tag_provenance');
+      const norm = normalize(raw);
+      if (!norm) return null;
+      if (PROVENANCE_LOCAL_KEYWORDS.some(key => norm.includes(key))) return 'local';
+      if (PROVENANCE_DISCOVERY_KEYWORDS.some(key => norm.includes(key))) return 'decouverte';
+      if (norm.includes('local')) return 'local';
+      return 'decouverte';
+    };
+
+    const buildProvenanceOptions = (wines = []) => {
+      const groups = new Set();
+      wines.forEach(wine => {
+        const group = classifyProvenanceGroup(wine);
+        if (group) groups.add(group);
+      });
+      return Array.from(groups).sort((a, b) => {
+        const ia = PROVENANCE_ORDER.indexOf(a);
+        const ib = PROVENANCE_ORDER.indexOf(b);
+        return (ia === -1 ? Number.MAX_SAFE_INTEGER : ia) - (ib === -1 ? Number.MAX_SAFE_INTEGER : ib);
+      }).map(group => {
+        const meta = getProvenanceMeta(group);
+        return { value: group, label: meta.label, desc: meta.desc, icon: meta.icon };
+      });
+    };
+
+    const buildSubstyleOptions = (wines = []) => {
+      const map = new Map();
+      wines.forEach(wine => {
+        const raw = getWineTag(wine, 'tag_sous-style');
+        const norm = canonicalSubstyle(raw);
+        if (!norm) return;
+        if (!map.has(norm)) {
+          const meta = getSubstyleMeta(norm, raw);
+          map.set(norm, { value: norm, label: meta.label, desc: meta.desc });
+        }
+      });
+      return Array.from(map.values()).sort((a, b) => {
+        const ia = SUBSTYLE_ORDER.indexOf(a.value);
+        const ib = SUBSTYLE_ORDER.indexOf(b.value);
+        if (ia !== ib) {
+          return (ia === -1 ? Number.MAX_SAFE_INTEGER : ia) - (ib === -1 ? Number.MAX_SAFE_INTEGER : ib);
+        }
+        return a.label.localeCompare(b.label, 'fr', { sensitivity: 'base' });
+      });
+    };
+
+    const styleMatches = (wine, value) => {
+      const tag = normalize(getWineTag(wine, 'tag_style'));
+      if (!tag) return false;
+      if (value === 'nature') return tag.includes('nature') || tag.includes('biodynam') || tag.includes('bio');
+      if (value === 'souple') return tag.includes('souple') || tag.includes('fruit');
+      if (value === 'puissant') return tag.includes('puissant') || tag.includes('struct');
+      if (value === 'sec') return tag.includes('sec') || tag.includes('frais') || tag.includes('miner');
+      if (value === 'moelleux') return tag.includes('moelleux') || tag.includes('doux');
+      return tag === value;
+    };
+
+    const substyleMatches = (wine, value) => {
+      const tag = canonicalSubstyle(getWineTag(wine, 'tag_sous-style'));
+      if (!tag) return false;
+      if (value === 'fruite') return tag.includes('fruite') || tag.includes('fruit');
+      return tag === value;
+    };
+
+    const isWineByGlass = (wine) => normalize(getWineTag(wine, 'tag_format')).includes('verre');
+    const isWineRecommended = (wine) => {
+      const raw = wine.Recommendation ?? wine['Recommendation'] ?? wine['recommendation'] ?? wine['Recommandation'] ?? wine['recommandation'] ?? wine['Reco'] ?? wine['reco'];
+      return normalize(raw) === 'oui';
+    };
+
+    const matchesSelection = (wine, question, selectionValue) => {
+      if (!selectionValue) return true;
+      const value = normalize(selectionValue);
+      if (typeof question.match === 'function') return question.match(wine, value);
+      if (question.tag) {
+        const tagValue = getWineTag(wine, question.tag);
+        return normalize(tagValue) === value;
+      }
+      return true;
+    };
+
+    const getEligibleWinesForStep = (questions, stepIndex) => {
+      if (!Array.isArray(questions) || !questions.length) return wineData;
+      const previous = questions.slice(0, stepIndex);
+      return wineData.filter(wine => previous.every(q => matchesSelection(wine, q, wineTreeSelections[q.id])));
+    };
+
+    const WHITE_STYLE_OPTIONS = [
+      { value: 'sec', label: 'Blanc sec', icon: '🍋', desc: 'Vif, tendu ou minéral.' },
+      { value: 'moelleux', label: 'Moelleux', icon: '🍯', desc: 'Doux, gourmand & velouté.' },
+      { value: 'nature', label: 'Biodynamie & nature', icon: '🌱', desc: 'Sans artifice, vivant.' }
+    ];
+
+    const RED_STYLE_OPTIONS = [
+      { value: 'souple', label: 'Souple & fruité', icon: '🍒', desc: 'Gamay, pinot, fraîcheur.' },
+      { value: 'puissant', label: 'Puissant & structuré', icon: '🔥', desc: 'Tanins fondus, épices.' },
+      { value: 'nature', label: 'Biodynamie & nature', icon: '🌿', desc: 'Jus libre, vibrants.' }
+    ];
+
+    const baseWineQuestion = {
+      id: 'color',
+      tag: 'tag_couleur',
+      question: 'Quelle couleur ?',
+      options: [
+        { value: 'blanc', label: 'Blanc', icon: '🤍', desc: 'Secs, moelleux ou nature.' },
+        { value: 'rouge', label: 'Rouge', icon: '❤️', desc: 'Souple, structuré ou nature.' }
+      ]
+    };
+
+    const whiteFlow = [
       {
         id: 'style',
-        question: (sel) => {
-          if (sel.color === 'blanc') return 'Quel style en blanc ?';
-          if (sel.color === 'rouge') return 'Quel style en rouge ?';
-          return 'Quel style ?';
-        },
-        tag: 'tag_style',
-        show: (sel) => sel.color !== 'rose', // Rosé = skip (tous frais)
-        options: (sel) => {
-          if (sel.color === 'blanc') {
-            return [
-              { value: 'frais', label: 'Frais & Minéral', desc: 'Sauvignon, Muscadet, salinité' },
-              { value: 'rond', label: 'Rond & Aromatique', desc: 'Chardonnay, fruits blancs' },
-              { value: 'orange', label: 'Orange / Macération', desc: 'Vins atypiques, nature' }
-            ];
-          }
-          if (sel.color === 'rouge') {
-            return [
-              { value: 'souple', label: 'Souple & Fruité', desc: 'Gamay, Pinot, croquant' },
-              { value: 'puissant', label: 'Puissant & Structuré', desc: 'Syrah, tanins, garrigue' },
-              { value: 'nature', label: 'Nature / Bio', desc: 'Biodynamie, terroir vivant' }
-            ];
-          }
-          return [];
-        }
+        question: 'Quel style de blanc ?',
+        options: WHITE_STYLE_OPTIONS,
+        match: styleMatches
       },
-      // Q4: Accord (optionnel, uniquement si "plat")
       {
-        id: 'accord',
-        question: 'Quel type de plat ?',
-        tag: 'tag_accord',
-        show: (sel) => sel.moment === 'plat',
-        options: [
-          { value: 'poisson', label: 'Poisson / Fruits de mer' },
-          { value: 'viande_blanche', label: 'Viande blanche / Volaille' },
-          { value: 'viande_rouge', label: 'Viande rouge / Gibier' },
-          { value: 'fromage', label: 'Fromage / Végétarien' }
-        ]
+        id: 'origin',
+        question: 'Envie d\'une cuvée locale ?',
+        options: (sel, wines) => buildProvenanceOptions(wines),
+        show: (sel) => !!sel.style,
+        match: (wine, value) => classifyProvenanceGroup(wine) === value
+      },
+      {
+        id: 'substyle',
+        question: 'Quel profil en blanc sec ?',
+        options: (sel, wines) => buildSubstyleOptions(wines),
+        show: (sel) => normalize(sel.style) === 'sec',
+        match: (wine, value) => substyleMatches(wine, value)
       }
     ];
 
-    // SYSTÈME DYNAMIQUE - Scoring basé sur les tags de la base de données
-    const getWinesByPath = (selections) => {
-      const { color, moment, style, accord } = selections;
-
-      // Filtrer les vins actifs et scorer selon les tags
-      let scored = wineData.map(wine => {
-        let score = 0;
-
-        // Match tag_couleur (poids: 10) - obligatoire
-        if (color && normalize(wine.tag_couleur || '') === normalize(color)) {
-          score += 10;
-        }
-
-        // Match tag_moment (poids: 8) - obligatoire
-        if (moment && normalize(wine.tag_moment || '') === normalize(moment)) {
-          score += 8;
-        }
-
-        // Match tag_style (poids: 6) - conditionnel
-        if (style && normalize(wine.tag_style || '') === normalize(style)) {
-          score += 6;
-        }
-
-        // Match tag_accord (poids: 5) - optionnel
-        if (accord && normalize(wine.tag_accord || '') === normalize(accord)) {
-          score += 5;
-        }
-
-        return { wine, score };
-      });
-
-      // Filtrer uniquement les vins avec score > 0 et trier par score décroissant
-      scored = scored.filter(w => w.score > 0).sort((a, b) => b.score - a.score);
-
-      // Si pas assez de résultats, retourner des vins de la bonne couleur
-      if (scored.length < 3) {
-        const fallback = wineData.filter(w =>
-          color && normalize(w.tag_couleur || '') === normalize(color)
-        ).slice(0, 6);
-        return fallback;
+    const redFlow = [
+      {
+        id: 'style',
+        question: 'Quel style de rouge ?',
+        options: RED_STYLE_OPTIONS,
+        match: styleMatches
+      },
+      {
+        id: 'origin',
+        question: 'Plutôt local ou escapade ?',
+        options: (sel, wines) => buildProvenanceOptions(wines),
+        show: (sel) => !!sel.style,
+        match: (wine, value) => classifyProvenanceGroup(wine) === value
       }
+    ];
 
-      // Retourner les 6 meilleurs vins
-      return scored.slice(0, 6).map(w => w.wine);
+    const getWineQuestions = () => {
+      const color = normalize(wineTreeSelections.color || '');
+      const flow = [baseWineQuestion];
+      if (color === 'blanc') {
+        flow.push(...whiteFlow);
+      } else if (color === 'rouge') {
+        flow.push(...redFlow);
+      }
+      return flow.filter(q => !q.show || q.show(wineTreeSelections));
     };
 
-    // Filtrer les questions selon les sélections actuelles
-    const getWineQuestions = () => {
-      return wineQuestions.filter(q => !q.show || q.show(wineTreeSelections));
+    // SYSTÈME DYNAMIQUE - Scoring & priorités commerciales
+    const getWinesByPath = (selections) => {
+      const normalizedSelections = {
+        color: normalize(selections.color || ''),
+        style: normalize(selections.style || ''),
+        origin: normalize(selections.origin || ''),
+        substyle: normalize(selections.substyle || '')
+      };
+
+      const filterWithKeys = (keys) => {
+        if (!keys.length) return wineData.slice();
+        return wineData.filter(wine => keys.every(key => {
+          const value = normalizedSelections[key];
+          if (!value) return true;
+          if (key === 'color') return normalize(getWineTag(wine, 'tag_couleur')) === value;
+          if (key === 'style') return styleMatches(wine, value);
+          if (key === 'origin') return classifyProvenanceGroup(wine) === value;
+          if (key === 'substyle') return substyleMatches(wine, value);
+          return true;
+        }));
+      };
+
+      const requiredKeys = ['color', 'style', 'origin', 'substyle'].filter(key => normalizedSelections[key]);
+      let filtered = filterWithKeys(requiredKeys);
+
+      const relaxOrder = ['substyle', 'origin', 'style'];
+      for (const key of relaxOrder) {
+        if (filtered.length) break;
+        const idx = requiredKeys.indexOf(key);
+        if (idx !== -1) {
+          requiredKeys.splice(idx, 1);
+          filtered = filterWithKeys(requiredKeys);
+        }
+      }
+
+      if (!filtered.length && normalizedSelections.color) {
+        filtered = filterWithKeys(['color']);
+      }
+
+      if (!filtered.length) {
+        filtered = wineData.slice();
+      }
+
+      const scored = filtered.map(wine => {
+        const matches = {
+          color: normalizedSelections.color ? normalize(getWineTag(wine, 'tag_couleur')) === normalizedSelections.color : false,
+          style: normalizedSelections.style ? styleMatches(wine, normalizedSelections.style) : false,
+          origin: normalizedSelections.origin ? classifyProvenanceGroup(wine) === normalizedSelections.origin : false,
+          substyle: normalizedSelections.substyle ? substyleMatches(wine, normalizedSelections.substyle) : false
+        };
+
+        let score = 0;
+        if (matches.color) score += 12;
+        if (matches.style) score += 8;
+        if (matches.origin) score += 5;
+        if (matches.substyle) score += 4;
+        if (!matches.style && normalizedSelections.style) score -= 1;
+        if (!matches.origin && normalizedSelections.origin) score -= 1;
+        if (!matches.substyle && normalizedSelections.substyle) score -= 1;
+
+        const byGlass = isWineByGlass(wine);
+        const recommended = isWineRecommended(wine);
+        if (byGlass) score += 2;
+        if (recommended) score += 3;
+
+        if (score < 0) score = 0;
+
+        return { wine, score, byGlass, recommended };
+      });
+
+      if (!scored.length) {
+        if (normalizedSelections.color) {
+          return wineData.filter(wine => normalize(getWineTag(wine, 'tag_couleur')) === normalizedSelections.color).slice(0, 6);
+        }
+        return wineData.slice(0, 6);
+      }
+
+      scored.sort((a, b) => {
+        if (a.score !== b.score) return b.score - a.score;
+        if (a.byGlass !== b.byGlass) return Number(b.byGlass) - Number(a.byGlass);
+        return byNameFR(a.wine, b.wine);
+      });
+
+      const recommendedItems = scored.filter(item => item.recommended);
+      const otherItems = scored.filter(item => !item.recommended);
+      const ordered = recommendedItems.concat(otherItems);
+
+      const firstGlassIndex = ordered.findIndex(item => item.byGlass);
+      if (firstGlassIndex > 0) {
+        const [glassFirst] = ordered.splice(firstGlassIndex, 1);
+        ordered.unshift(glassFirst);
+      }
+
+      return ordered.slice(0, 6).map(item => item.wine);
     };
 
     const renderWineTree = () => {
@@ -1144,15 +1389,38 @@
       }
 
       const questions = getWineQuestions();
-      
+
       if (wineTreeStep >= questions.length) {
         renderWineRecommendations();
         return;
       }
 
       const currentQ = questions[wineTreeStep];
-      const options = typeof currentQ.options === 'function' ? currentQ.options(wineTreeSelections) : currentQ.options;
-      const questionText = typeof currentQ.question === 'function' ? currentQ.question(wineTreeSelections) : currentQ.question;
+      const eligibleWines = getEligibleWinesForStep(questions, wineTreeStep);
+      let options = typeof currentQ.options === 'function'
+        ? currentQ.options(wineTreeSelections, eligibleWines)
+        : currentQ.options;
+      options = Array.isArray(options) ? options.filter(Boolean) : [];
+
+      if (!options.length) {
+        delete wineTreeSelections[currentQ.id];
+        wineTreeStep++;
+        renderWineTree();
+        return;
+      }
+
+      if (currentQ.autoAdvance !== false && options.length === 1) {
+        wineTreeSelections[currentQ.id] = options[0].value;
+        wineTreeStep++;
+        renderWineTree();
+        return;
+      }
+
+      const questionText = typeof currentQ.question === 'function'
+        ? currentQ.question(wineTreeSelections, eligibleWines)
+        : currentQ.question;
+      const totalSteps = questions.length;
+      const currentStepIndex = Math.min(wineTreeStep + 1, totalSteps);
 
       let html = `
         <div class="wine-tree">
@@ -1167,10 +1435,10 @@
             ${questions.map((_, idx) => `<div class="progress-step ${idx <= wineTreeStep ? 'active' : ''}"></div>`).join('')}
           </div>
 
-          <div class="progress-info">Étape ${wineTreeStep + 1} sur ${questions.length}</div>
+          <div class="progress-info">Étape ${currentStepIndex} sur ${totalSteps}</div>
 
           <h3 class="question-title">${questionText}</h3>
-          
+
           <div class="wine-options">
             ${options.map(opt => `
               <button class="wine-option" data-value="${opt.value}">
@@ -1208,7 +1476,21 @@
 
       qsa('.wine-option').forEach(btn => {
         btn.addEventListener('click', () => {
-          wineTreeSelections[currentQ.id] = btn.dataset.value;
+          const value = btn.dataset.value;
+          const prevValue = wineTreeSelections[currentQ.id];
+          wineTreeSelections[currentQ.id] = value;
+
+          if (currentQ.id === 'color' && value !== prevValue) {
+            delete wineTreeSelections.style;
+            delete wineTreeSelections.origin;
+            delete wineTreeSelections.substyle;
+          }
+
+          if (currentQ.id === 'style' && value !== prevValue) {
+            delete wineTreeSelections.origin;
+            delete wineTreeSelections.substyle;
+          }
+
           wineTreeStep++;
           renderWineTree();
         });
@@ -1239,6 +1521,86 @@
 
       const recommendations = getWinesByPath(wineTreeSelections);
 
+      const recommendationCards = recommendations.length ? recommendations.map(wine => {
+        const badges = [];
+        if (isWineRecommended(wine)) {
+          badges.push('<span class="wine-badge wine-badge-reco">Notre recommandation</span>');
+        }
+        if (isWineByGlass(wine)) {
+          badges.push('<span class="wine-badge wine-badge-glass">Servi au verre</span>');
+        }
+        const selectedOrigin = normalize(wineTreeSelections.origin || '');
+        const originGroup = classifyProvenanceGroup(wine);
+        if (originGroup) {
+          if (originGroup === 'local' || (selectedOrigin && selectedOrigin === originGroup)) {
+            const originMeta = getProvenanceMeta(originGroup);
+            const originClass = originGroup === 'local' ? 'wine-badge wine-badge-local' : 'wine-badge wine-badge-discovery';
+            badges.push(`<span class="${originClass}">${originMeta.label}</span>`);
+          }
+        }
+
+        const colorNorm = normalize(getWineTag(wine, 'tag_couleur'));
+        const styleRaw = getWineTag(wine, 'tag_style');
+        const styleNorm = normalize(styleRaw);
+        let styleLabel = '';
+        if (styleNorm) {
+          if (styleNorm === 'sec') {
+            styleLabel = colorNorm === 'blanc' ? 'Blanc sec' : 'Sec';
+          } else if (styleNorm === 'moelleux') {
+            styleLabel = 'Moelleux';
+          } else if (styleNorm === 'souple') {
+            styleLabel = 'Souple & fruité';
+          } else if (styleNorm === 'puissant') {
+            styleLabel = 'Puissant & structuré';
+          } else if (styleNorm.includes('nature') || styleNorm.includes('biodynam')) {
+            styleLabel = 'Biodynamie & nature';
+          } else {
+            styleLabel = toTitle(styleRaw || styleNorm);
+          }
+        }
+
+        const profileParts = [];
+        if (styleLabel) profileParts.push(styleLabel);
+        const substyleRaw = getWineTag(wine, 'tag_sous-style');
+        const substyleNorm = canonicalSubstyle(substyleRaw);
+        if (substyleNorm) {
+          const meta = getSubstyleMeta(substyleNorm, substyleRaw);
+          if (meta.label && !profileParts.includes(meta.label)) profileParts.push(meta.label);
+        }
+        const formatRaw = getWineTag(wine, 'tag_format');
+        const formatNorm = normalize(formatRaw);
+        if (formatNorm && !isWineByGlass(wine)) {
+          profileParts.push(toTitle(formatRaw));
+        }
+        const profileText = profileParts.filter(Boolean).join(' • ');
+
+        const badgesHTML = badges.length ? `<div class="wine-card-badges">${badges.join('')}</div>` : '';
+        let regionHTML = '';
+        let grapesHTML = '';
+        const description = wine.Description || '';
+        if (description) {
+          const parts = description.split(',');
+          regionHTML = `<div class="wine-card-region">${parts[0]}</div>`;
+          if (parts.length > 1) {
+            const rest = parts.slice(1).join(',').trim();
+            if (rest) {
+              grapesHTML = `<div class="wine-card-grapes">${rest}</div>`;
+            }
+          }
+        }
+        const profileHTML = profileText ? `<div class="wine-card-grapes">${profileText}</div>` : '';
+
+        const cardParts = [];
+        cardParts.push('<div class="wine-card">');
+        if (badgesHTML) cardParts.push(badgesHTML);
+        cardParts.push(`<div class="wine-card-header"><div class="wine-card-name">${wine.Nom}</div><div class="wine-card-price">${formatPrice(wine.Prix)}</div></div>`);
+        if (regionHTML) cardParts.push(regionHTML);
+        if (grapesHTML) cardParts.push(grapesHTML);
+        if (profileHTML) cardParts.push(profileHTML);
+        cardParts.push('</div>');
+        return cardParts.join('');
+      }).join('') : '<div class="empty-state"><h3>Aucun vin trouvé</h3><p>Essayez une autre combinaison ou consultez la carte complète.</p></div>';
+
       let html = `
         <div class="wine-recommendations">
           <div class="reco-header">
@@ -1248,16 +1610,7 @@
             <h2 class="reco-title">Nos recommandations</h2>
           </div>
 
-          ${recommendations.map(wine => `
-            <div class="wine-card">
-              <div class="wine-card-header">
-                <div class="wine-card-name">${wine.Nom}</div>
-                <div class="wine-card-price">${formatPrice(wine.Prix)}</div>
-              </div>
-              ${wine.Description ? `<div class="wine-card-region">${wine.Description.split(',')[0]}</div>` : ''}
-              ${wine.Description && wine.Description.includes(',') ? `<div class="wine-card-grapes">${wine.Description.split(',').slice(1).join(',').trim()}</div>` : ''}
-            </div>
-          `).join('')}
+          ${recommendationCards}
 
           <div class="wine-nav-btns">
             <button class="wine-btn wine-btn-back" id="wineResetBtn">
