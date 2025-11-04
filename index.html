@@ -581,7 +581,30 @@
     }
 
     .wine-option-icon{
-      font-size: 1.375rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .wine-option-dot{
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      border: 1px solid rgba(26, 46, 37, 0.18);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    }
+
+    .wine-option-dot--blanc{
+      background: linear-gradient(135deg, #f7f3e8 0%, #efe8d4 100%);
+      border-color: rgba(197, 183, 143, 0.55);
+    }
+
+    .wine-option-dot--rouge{
+      background: linear-gradient(135deg, #7b1f30 0%, #b9484d 100%);
+      border-color: rgba(123, 31, 48, 0.55);
     }
 
     .chevron-icon{
@@ -712,33 +735,45 @@
     }
 
     .wine-badge-icon{
-      font-size: 0.85rem;
-      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.95rem;
+      height: 0.95rem;
+    }
+
+    .wine-badge-dot{
+      display: inline-block;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      border: 1px solid rgba(26, 46, 37, 0.18);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    }
+
+    .wine-badge-dot--blanc{
+      background: linear-gradient(135deg, #f7f3e8 0%, #efe8d4 100%);
+      border-color: rgba(197, 183, 143, 0.5);
+    }
+
+    .wine-badge-dot--rouge{
+      background: linear-gradient(135deg, #7b1f30 0%, #b9484d 100%);
+      border-color: rgba(123, 31, 48, 0.55);
     }
 
     .wine-badge-reco{
       background: var(--warm-white);
-      border: 1px solid rgba(197, 183, 143, 0.65);
+      border: 1px solid rgba(155, 139, 108, 0.65);
       color: var(--deep-sage);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 8px rgba(26, 46, 37, 0.08);
+      border-radius: var(--radius-md);
+      padding: 0.35rem 0.85rem;
     }
 
     .wine-badge-glass{
       background: rgba(61, 90, 76, 0.12);
       color: var(--sage-medium);
       border: 1px solid rgba(61, 90, 76, 0.25);
-    }
-
-    .wine-badge-glass .wine-badge-icon{
-      font-size: 0.9rem;
-    }
-
-    .wine-badge-glass--blanc .wine-badge-icon{
-      color: #d9d2c4;
-    }
-
-    .wine-badge-glass--rouge .wine-badge-icon{
-      color: #b9484d;
     }
 
     .wine-badge-local{
@@ -1237,8 +1272,18 @@
       tag: 'tag_couleur',
       question: 'Quelle couleur ?',
       options: [
-        { value: 'blanc', label: 'Blanc', icon: '⚪', desc: 'Secs, moelleux ou nature.' },
-        { value: 'rouge', label: 'Rouge', icon: '🔴', desc: 'Souple, structuré ou nature.' }
+        {
+          value: 'blanc',
+          label: 'Blanc',
+          icon: '<span class="wine-option-dot wine-option-dot--blanc" aria-hidden="true"></span>',
+          desc: 'Secs, moelleux ou nature.'
+        },
+        {
+          value: 'rouge',
+          label: 'Rouge',
+          icon: '<span class="wine-option-dot wine-option-dot--rouge" aria-hidden="true"></span>',
+          desc: 'Souple, structuré ou nature.'
+        }
       ]
     };
 
@@ -1537,7 +1582,9 @@
         }
         if (isWineByGlass(wine)) {
           const colorTag = normalize(getWineTag(wine, 'tag_couleur'));
-          const icon = colorTag === 'rouge' ? '🔴' : '⚪';
+          const icon = colorTag === 'rouge'
+            ? '<span class="wine-badge-dot wine-badge-dot--rouge" aria-hidden="true"></span>'
+            : '<span class="wine-badge-dot wine-badge-dot--blanc" aria-hidden="true"></span>';
           const glassClass = colorTag === 'rouge'
             ? 'wine-badge-glass wine-badge-glass--rouge'
             : 'wine-badge-glass wine-badge-glass--blanc';
