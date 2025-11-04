@@ -584,6 +584,16 @@
       font-size: 1.375rem;
     }
 
+    .wine-color-dot{
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background: var(--dot-color, rgba(197, 183, 143, 0.55));
+      border: 1px solid rgba(26, 46, 37, 0.2);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
+    }
+
     .chevron-icon{
       width: 18px;
       height: 18px;
@@ -699,56 +709,33 @@
     .wine-badge{
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
       font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
       border-radius: 999px;
-      padding: 0.3rem 0.75rem;
+      padding: 0.35rem 0.75rem;
       background: rgba(26, 46, 37, 0.08);
       color: var(--text-primary);
-    }
-
-    .wine-badge::before{
-      content: '\2728';
-      font-size: 0.75rem;
+      border: 1px solid transparent;
     }
 
     .wine-badge-reco{
-      background: linear-gradient(120deg, rgba(197, 183, 143, 0.9), rgba(155, 139, 108, 0.85));
-      color: #fff;
-      box-shadow: 0 6px 12px rgba(155, 139, 108, 0.22);
-    }
-
-    .wine-badge-reco::before{
-      content: '\1F31F';
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(155, 139, 108, 0.55);
+      color: var(--deep-sage);
+      box-shadow: 0 4px 12px rgba(155, 139, 108, 0.18);
     }
 
     .wine-badge-glass{
-      background: rgba(61, 90, 76, 0.12);
+      background: rgba(61, 90, 76, 0.1);
       color: var(--sage-medium);
-    }
-
-    .wine-badge-glass::before{
-      content: '\1F377';
+      border-color: rgba(61, 90, 76, 0.25);
     }
 
     .wine-badge-local{
-      background: rgba(250, 248, 244, 0.9);
+      background: rgba(250, 248, 244, 0.92);
       border: 1px solid rgba(197, 183, 143, 0.45);
-    }
-
-    .wine-badge-local::before{
-      content: '\1F3E1';
-    }
-
-    .wine-badge-discovery{
-      background: rgba(26, 46, 37, 0.1);
-      color: var(--text-primary);
-    }
-
-    .wine-badge-discovery::before{
-      content: '\1F9ED';
+      color: var(--bronze);
     }
 
     .wine-card:hover{
@@ -1075,7 +1062,25 @@
       const num = Number(str.replace(',','.'));
       return (!isNaN(num) && Number.isInteger(num)) ? `${num}€` : str;
     };
+    const getPriceValue = (raw='') => {
+      const matches = String(raw).match(/(\d+(?:[.,]\d+)?)/g);
+      if (!matches) return Number.POSITIVE_INFINITY;
+      const numbers = matches
+        .map(n => parseFloat(n.replace(',', '.')))
+        .filter(n => Number.isFinite(n));
+      if (!numbers.length) return Number.POSITIVE_INFINITY;
+      return Math.min(...numbers);
+    };
     const byNameFR = (a,b) => (a?.Nom||'').localeCompare(b?.Nom||'','fr',{sensitivity:'base'});
+    const compareWineByPrice = (a, b) => {
+      const priceA = getPriceValue(a?.Prix);
+      const priceB = getPriceValue(b?.Prix);
+      const bothFinite = Number.isFinite(priceA) && Number.isFinite(priceB);
+      if (bothFinite && priceA !== priceB) return priceA - priceB;
+      if (Number.isFinite(priceA) && !Number.isFinite(priceB)) return -1;
+      if (!Number.isFinite(priceA) && Number.isFinite(priceB)) return 1;
+      return byNameFR(a, b);
+    };
     const qs = sel => document.querySelector(sel);
     const qsa = sel => Array.from(document.querySelectorAll(sel));
 
@@ -1116,8 +1121,8 @@
     };
 
     const PROVENANCE_META = {
-      local: { label: 'Sélection locale', desc: 'Vignerons du Languedoc & Occitanie.', icon: '🏡' },
-      decouverte: { label: 'Escapade & découverte', desc: 'Autres régions & voyages gustatifs.', icon: '🧭' }
+      local: { label: 'Sélection locale', desc: 'Vignerons du Languedoc & Occitanie.' },
+      decouverte: { label: 'Escapade & découverte', desc: 'Autres régions & voyages gustatifs.' }
     };
     const PROVENANCE_ORDER = ['local', 'decouverte'];
     const PROVENANCE_LOCAL_KEYWORDS = ['local', 'languedoc', 'occitanie', 'herault', 'hérault', 'pic', 'montpellier', 'gard'];
@@ -1145,7 +1150,7 @@
         return (ia === -1 ? Number.MAX_SAFE_INTEGER : ia) - (ib === -1 ? Number.MAX_SAFE_INTEGER : ib);
       }).map(group => {
         const meta = getProvenanceMeta(group);
-        return { value: group, label: meta.label, desc: meta.desc, icon: meta.icon };
+        return { value: group, label: meta.label, desc: meta.desc };
       });
     };
 
@@ -1189,9 +1194,9 @@
     };
 
     const isWineByGlass = (wine) => normalize(getWineTag(wine, 'tag_format')).includes('verre');
-    const isWineRecommended = (wine) => {
-      const raw = wine.Recommendation ?? wine['Recommendation'] ?? wine['recommendation'] ?? wine['Recommandation'] ?? wine['recommandation'] ?? wine['Reco'] ?? wine['reco'];
-      return normalize(raw) === 'oui';
+    const isWineRecommended = (wine = {}) => {
+      const keys = ['Recommendations', 'Recommendation', 'recommendation', 'Recommandation', 'recommandation', 'Reco', 'reco'];
+      return keys.some(key => normalize(wine[key]) === 'oui');
     };
 
     const matchesSelection = (wine, question, selectionValue) => {
@@ -1212,15 +1217,15 @@
     };
 
     const WHITE_STYLE_OPTIONS = [
-      { value: 'sec', label: 'Blanc sec', icon: '🍋', desc: 'Vif, tendu ou minéral.' },
-      { value: 'moelleux', label: 'Moelleux', icon: '🍯', desc: 'Doux, gourmand & velouté.' },
-      { value: 'nature', label: 'Biodynamie & nature', icon: '🌱', desc: 'Sans artifice, vivant.' }
+      { value: 'sec', label: 'Blanc sec', desc: 'Vif, tendu ou minéral.' },
+      { value: 'moelleux', label: 'Moelleux', desc: 'Doux, gourmand & velouté.' },
+      { value: 'nature', label: 'Biodynamie & nature', desc: 'Sans artifice, vivant.' }
     ];
 
     const RED_STYLE_OPTIONS = [
-      { value: 'souple', label: 'Souple & fruité', icon: '🍒', desc: 'Gamay, pinot, fraîcheur.' },
-      { value: 'puissant', label: 'Puissant & structuré', icon: '🔥', desc: 'Tanins fondus, épices.' },
-      { value: 'nature', label: 'Biodynamie & nature', icon: '🌿', desc: 'Jus libre, vibrants.' }
+      { value: 'souple', label: 'Souple & fruité', desc: 'Gamay, pinot, fraîcheur.' },
+      { value: 'puissant', label: 'Puissant & structuré', desc: 'Tanins fondus, épices.' },
+      { value: 'nature', label: 'Biodynamie & nature', desc: 'Jus libre, vibrants.' }
     ];
 
     const baseWineQuestion = {
@@ -1228,8 +1233,8 @@
       tag: 'tag_couleur',
       question: 'Quelle couleur ?',
       options: [
-        { value: 'blanc', label: 'Blanc', icon: '🤍', desc: 'Secs, moelleux ou nature.' },
-        { value: 'rouge', label: 'Rouge', icon: '❤️', desc: 'Souple, structuré ou nature.' }
+        { value: 'blanc', label: 'Blanc', dotColor: '#E8D9B5', desc: 'Secs, moelleux ou nature.' },
+        { value: 'rouge', label: 'Rouge', dotColor: '#7B1F29', desc: 'Souple, structuré ou nature.' }
       ]
     };
 
@@ -1281,6 +1286,17 @@
         flow.push(...redFlow);
       }
       return flow.filter(q => !q.show || q.show(wineTreeSelections));
+    };
+
+    const getOptionIconHTML = (opt = {}) => {
+      if (opt.dotColor) {
+        const safeColor = opt.dotColor;
+        return `<span class="wine-color-dot" style="--dot-color:${safeColor}"></span>`;
+      }
+      if (opt.icon) {
+        return `<span class="wine-option-icon">${opt.icon}</span>`;
+      }
+      return '';
     };
 
     // SYSTÈME DYNAMIQUE - Scoring & priorités commerciales
@@ -1366,15 +1382,35 @@
         return byNameFR(a.wine, b.wine);
       });
 
-      const recommendedItems = scored.filter(item => item.recommended);
-      const otherItems = scored.filter(item => !item.recommended);
-      const ordered = recommendedItems.concat(otherItems);
+      const sortByPriceThenScore = (items) => items.sort((a, b) => {
+        const priceA = getPriceValue(a.wine?.Prix);
+        const priceB = getPriceValue(b.wine?.Prix);
+        const bothFinite = Number.isFinite(priceA) && Number.isFinite(priceB);
+        if (bothFinite && priceA !== priceB) return priceA - priceB;
+        if (Number.isFinite(priceA) && !Number.isFinite(priceB)) return -1;
+        if (!Number.isFinite(priceA) && Number.isFinite(priceB)) return 1;
+        if (b.score !== a.score) return b.score - a.score;
+        return byNameFR(a.wine, b.wine);
+      });
 
-      const firstGlassIndex = ordered.findIndex(item => item.byGlass);
-      if (firstGlassIndex > 0) {
-        const [glassFirst] = ordered.splice(firstGlassIndex, 1);
-        ordered.unshift(glassFirst);
+      const byGlassItems = [];
+      const recommendedItems = [];
+      const otherItems = [];
+      for (const item of scored) {
+        if (item.byGlass) {
+          byGlassItems.push(item);
+        } else if (item.recommended) {
+          recommendedItems.push(item);
+        } else {
+          otherItems.push(item);
+        }
       }
+
+      const ordered = [
+        ...sortByPriceThenScore(byGlassItems),
+        ...sortByPriceThenScore(recommendedItems),
+        ...sortByPriceThenScore(otherItems)
+      ];
 
       return ordered.slice(0, 6).map(item => item.wine);
     };
@@ -1444,7 +1480,7 @@
               <button class="wine-option" data-value="${opt.value}">
                 <div class="wine-option-content">
                   <div class="wine-option-label">
-                    ${opt.icon ? `<span class="wine-option-icon">${opt.icon}</span>` : ''}
+                    ${getOptionIconHTML(opt)}
                     ${opt.label}
                   </div>
                   ${opt.desc ? `<div class="wine-option-desc">${opt.desc}</div>` : ''}
@@ -1523,20 +1559,15 @@
 
       const recommendationCards = recommendations.length ? recommendations.map(wine => {
         const badges = [];
-        if (isWineRecommended(wine)) {
-          badges.push('<span class="wine-badge wine-badge-reco">Notre recommandation</span>');
-        }
         if (isWineByGlass(wine)) {
-          badges.push('<span class="wine-badge wine-badge-glass">Servi au verre</span>');
+          badges.push('<span class="wine-badge wine-badge-glass">Vin au verre</span>');
         }
-        const selectedOrigin = normalize(wineTreeSelections.origin || '');
-        const originGroup = classifyProvenanceGroup(wine);
-        if (originGroup) {
-          if (originGroup === 'local' || (selectedOrigin && selectedOrigin === originGroup)) {
-            const originMeta = getProvenanceMeta(originGroup);
-            const originClass = originGroup === 'local' ? 'wine-badge wine-badge-local' : 'wine-badge wine-badge-discovery';
-            badges.push(`<span class="${originClass}">${originMeta.label}</span>`);
-          }
+        if (isWineRecommended(wine)) {
+          badges.push('<span class="wine-badge wine-badge-reco">Recommandé</span>');
+        }
+        if (classifyProvenanceGroup(wine) === 'local') {
+          const originMeta = getProvenanceMeta('local');
+          badges.push(`<span class="wine-badge wine-badge-local">${originMeta.label}</span>`);
         }
 
         const colorNorm = normalize(getWineTag(wine, 'tag_couleur'));
@@ -1657,7 +1688,7 @@
       
       for (const [section, wines] of groups) {
         html += `<h2 class="section-title">${section}</h2>`;
-        wines.sort(byNameFR).forEach(wine => {
+        wines.sort(compareWineByPrice).forEach(wine => {
           html += `
             <div class="menu-item">
               <div class="item-info">
