@@ -212,7 +212,7 @@ Tous les composants React restent identiques ! Seule la couche de données chang
 - ✅ Enregistrez rapidement après vos changements
 
 ### Pour les Vins
-- ✅ Toujours remplir au moins 3 tags (couleur, format, moment)
+- ✅ Toujours remplir au moins 3 tags (couleur, moment, style)
 - ✅ Les tags sont utilisés par l'arbre de recommandation du menu public
 - ✅ Si vous changez les tags, l'arbre s'adapte automatiquement
 
@@ -239,12 +239,13 @@ L'application lit et écrit dans ces colonnes :
 | Actif | Visible sur le menu ? | OUI / NON |
 | En ce moment | Mis en avant ? | OUI / NON |
 | tag_couleur | Tag couleur (vins) | rouge, blanc, rosé |
-| tag_format | Tag format (vins) | verre, bouteille |
 | tag_moment | Tag moment (vins) | apero, plat, degustation |
 | tag_style | Tag style (vins) | frais, rond, puissant... |
 | tag_accord | Tag accord (vins) | poisson, viande_rouge... |
 
 **⚠️ Ne supprimez jamais ces colonnes du Google Sheet !**
+
+> ℹ️ Le format verre/bouteille est désormais déterminé via la colonne **Section** (ex. « Verre rouge », « Bouteille rouge »).
 
 ---
 
