@@ -271,36 +271,6 @@ export default function ProductDetail({ product, onSave, onClose }) {
                   </div>
                 </div>
 
-                {/* Format */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Format
-                  </label>
-                  <div className="flex gap-2 flex-wrap">
-                    {CONFIG.WINE_TAGS.format.map(tag => (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => handleChange('tag_format', tag)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                          formData.tag_format === tag
-                            ? 'bg-blue-600 text-white shadow-md'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                      >
-                        {tag}
-                      </button>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => handleChange('tag_format', '')}
-                      className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-50 text-gray-500 hover:bg-gray-100"
-                    >
-                      ✕ Aucun
-                    </button>
-                  </div>
-                </div>
-
                 {/* Moment */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">

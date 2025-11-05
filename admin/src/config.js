@@ -30,7 +30,6 @@ export const CONFIG = {
   // Tags disponibles pour les vins
   WINE_TAGS: {
     couleur: ['rouge', 'blanc', 'rose'],
-    format: ['verre', 'bouteille'],
     moment: ['apero', 'plat', 'degustation'],
     style: ['frais', 'rond', 'souple', 'puissant', 'nature', 'orange'],
     accord: ['poisson', 'viande_blanche', 'viande_rouge', 'vegetarien']

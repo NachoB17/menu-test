@@ -87,7 +87,6 @@ export default function Dashboard({ user, onLogout }) {
       Actif: 'OUI',
       'En ce moment': 'NON',
       tag_couleur: '',
-      tag_format: '',
       tag_moment: '',
       tag_style: '',
       tag_accord: ''

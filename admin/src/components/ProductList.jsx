@@ -156,16 +156,11 @@ function ProductCard({ product, onEdit, onDelete }) {
             </div>
 
             {/* Tags vins */}
-            {isWine && (product.tag_couleur || product.tag_format || product.tag_moment || product.tag_style || product.tag_accord) && (
+            {isWine && (product.tag_couleur || product.tag_moment || product.tag_style || product.tag_accord) && (
               <div className="flex flex-wrap gap-2 my-4 p-3 bg-gradient-to-r from-gray-50 to-transparent rounded-lg border-l-2 border-soft-gold">
                 {product.tag_couleur && (
                   <span className="inline-flex items-center text-xs font-semibold px-3 py-1.5 bg-gradient-to-r from-red-100 to-red-50 text-red-700 rounded-lg shadow-sm border border-red-200">
                     🍷 {product.tag_couleur}
-                  </span>
-                )}
-                {product.tag_format && (
-                  <span className="inline-flex items-center text-xs font-semibold px-3 py-1.5 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-lg shadow-sm border border-blue-200">
-                    🥂 {product.tag_format}
                   </span>
                 )}
                 {product.tag_moment && (

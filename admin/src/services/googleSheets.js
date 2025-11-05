@@ -21,7 +21,7 @@ class GoogleSheetsService {
     }
 
     try {
-      const range = `${CONFIG.SHEET_TAB_NAME}!A:M`; // Colonnes A à M (ID jusqu'à tag_accord)
+      const range = `${CONFIG.SHEET_TAB_NAME}!A:L`; // Colonnes A à L (ID jusqu'à tag_accord)
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.GOOGLE_SHEET_ID}/values/${range}`;
 
       const response = await fetch(url, {
@@ -67,7 +67,7 @@ class GoogleSheetsService {
     }
 
     try {
-      // Construire les valeurs dans le bon ordre (colonnes A à M)
+      // Construire les valeurs dans le bon ordre (colonnes A à L)
       const values = [[
         productData.ID || '',
         productData.Onglet || '',
@@ -78,13 +78,12 @@ class GoogleSheetsService {
         productData.Actif || 'NON',
         productData['En ce moment'] || 'NON',
         productData.tag_couleur || '',
-        productData.tag_format || '',
         productData.tag_moment || '',
         productData.tag_style || '',
         productData.tag_accord || ''
       ]];
 
-      const range = `${CONFIG.SHEET_TAB_NAME}!A${rowIndex}:M${rowIndex}`;
+      const range = `${CONFIG.SHEET_TAB_NAME}!A${rowIndex}:L${rowIndex}`;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.GOOGLE_SHEET_ID}/values/${range}?valueInputOption=RAW`;
 
       const response = await fetch(url, {
@@ -131,13 +130,12 @@ class GoogleSheetsService {
         productData.Actif || 'OUI',
         productData['En ce moment'] || 'NON',
         productData.tag_couleur || '',
-        productData.tag_format || '',
         productData.tag_moment || '',
         productData.tag_style || '',
         productData.tag_accord || ''
       ]];
 
-      const range = `${CONFIG.SHEET_TAB_NAME}!A:M`;
+      const range = `${CONFIG.SHEET_TAB_NAME}!A:L`;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.GOOGLE_SHEET_ID}/values/${range}:append?valueInputOption=RAW`;
 
       const response = await fetch(url, {
@@ -168,9 +166,9 @@ class GoogleSheetsService {
 
     try {
       // On vide la ligne plutôt que de la supprimer physiquement pour éviter les décalages
-      const emptyValues = [['', '', '', '', '', '', '', '', '', '', '', '', '']];
+      const emptyValues = [['', '', '', '', '', '', '', '', '', '', '', '']];
 
-      const range = `${CONFIG.SHEET_TAB_NAME}!A${rowIndex}:M${rowIndex}`;
+      const range = `${CONFIG.SHEET_TAB_NAME}!A${rowIndex}:L${rowIndex}`;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.GOOGLE_SHEET_ID}/values/${range}?valueInputOption=RAW`;
 
       const response = await fetch(url, {
