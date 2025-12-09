@@ -89,6 +89,12 @@
       outline-offset: 3px;
     }
 
+    /* Amélioration des états de focus pour l'accessibilité */
+    a:focus-visible, button:focus-visible, input:focus-visible{
+      outline: 3px solid var(--soft-gold);
+      outline-offset: 2px;
+    }
+
     /* Header Premium */
     header.header{
       position: relative;
@@ -143,11 +149,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 1px solid rgba(197, 183, 143, 0.3);
-      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(197, 183, 143, 0.4);
+      background: rgba(255, 255, 255, 0.12);
       color: var(--soft-gold);
       cursor: pointer;
       backdrop-filter: blur(8px);
@@ -155,9 +163,14 @@
     }
 
     .share-btn:hover{
-      background: rgba(255, 255, 255, 0.18);
-      border-color: rgba(197, 183, 143, 0.5);
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(197, 183, 143, 0.6);
       transform: translateY(-1px);
+    }
+
+    .share-btn:focus-visible{
+      outline: 2px solid var(--soft-gold);
+      outline-offset: 3px;
     }
 
     /* Search Container */
@@ -176,8 +189,9 @@
       flex: 1;
       padding: var(--space-md) var(--space-lg);
       font-size: 1rem;
+      min-height: 44px;
       border-radius: var(--radius-lg);
-      border: 1px solid rgba(26, 46, 37, 0.12);
+      border: 1px solid rgba(26, 46, 37, 0.15);
       background: var(--warm-white);
       box-shadow: var(--shadow-sm);
       color: var(--text-primary);
@@ -197,10 +211,12 @@
     }
 
     .clear-btn{
-      border: 1px solid rgba(26, 46, 37, 0.12);
+      border: 1px solid rgba(26, 46, 37, 0.15);
       background: var(--warm-white);
       border-radius: var(--radius-lg);
       padding: var(--space-md) var(--space-lg);
+      min-width: 44px;
+      min-height: 44px;
       cursor: pointer;
       font-size: 0.875rem;
       color: var(--text-secondary);
@@ -283,6 +299,7 @@
       background: var(--warm-white);
       border: 1px solid rgba(26, 46, 37, 0.15);
       padding: var(--space-sm) var(--space-md);
+      min-height: 44px;
       font-size: 0.9375rem;
       cursor: pointer;
       font-weight: 500;
@@ -353,7 +370,7 @@
       font-weight: 600;
       color: var(--text-primary);
       letter-spacing: -0.01em;
-      line-height: 1.4;
+      line-height: 1.45;
       font-family: 'Cormorant Garamond', Georgia, serif;
     }
 
@@ -372,7 +389,7 @@
       color: var(--text-secondary);
       font-style: italic;
       margin-top: var(--space-xs);
-      line-height: 1.5;
+      line-height: 1.6;
       font-weight: 400;
     }
 
@@ -615,6 +632,7 @@
 
     .wine-btn{
       padding: var(--space-sm) var(--space-lg);
+      min-height: 44px;
       border-radius: var(--radius-lg);
       font-size: 0.9375rem;
       font-weight: 500;
@@ -623,6 +641,7 @@
       border: 1px solid rgba(26, 46, 37, 0.15);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: var(--space-xs);
       font-family: 'Inter', sans-serif;
     }
@@ -804,14 +823,16 @@
       }
 
       .header-subtitle{
-        font-size: 1rem;
+        font-size: 1.0625rem;
       }
 
       .share-btn{
         right: var(--space-md);
         top: var(--space-md);
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
       }
 
       .search-container{
@@ -822,11 +843,23 @@
         flex-direction: row;
         align-items: flex-start;
         gap: var(--space-md);
+        padding: var(--space-lg);
+      }
+
+      .item-name{
+        font-size: 1.4375rem;
+      }
+
+      .item-description{
+        font-size: 1rem;
+        line-height: 1.6;
       }
 
       .item-price{
         flex-shrink: 0;
         margin-top: 0;
+        font-size: 1.125rem;
+        padding: var(--space-sm) var(--space-md);
       }
 
       .wine-card-header{
@@ -853,26 +886,40 @@
       }
 
       .tab-btn{
-        font-size: 0.875rem;
-        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.9375rem;
+        padding: var(--space-sm) var(--space-md);
       }
 
       .section-title{
-        font-size: 1.625rem;
+        font-size: 1.75rem;
+        margin: var(--space-xl) 0 var(--space-md);
       }
 
       .wine-tree-title, .reco-title{
-        font-size: 1.5rem;
+        font-size: 1.625rem;
       }
 
       .question-title{
-        font-size: 1.25rem;
+        font-size: 1.375rem;
+      }
+
+      .wine-option{
+        padding: var(--space-md) var(--space-lg);
+        min-height: 60px;
+      }
+
+      .wine-option-label{
+        font-size: 1.0625rem;
+      }
+
+      .wine-option-desc{
+        font-size: 0.9375rem;
       }
     }
 
     @media (max-width: 480px){
       .header-title{
-        font-size: 1.75rem;
+        font-size: 1.875rem;
         flex-direction: column;
         gap: var(--space-sm);
       }
@@ -880,6 +927,10 @@
       .header-logo{
         height: 2rem;
         width: 2rem;
+      }
+
+      .header-subtitle{
+        font-size: 1rem;
       }
 
       main.container{
@@ -894,7 +945,24 @@
       .clear-btn{
         padding: var(--space-md) var(--space-md);
         min-width: 44px;
+        min-height: 44px;
         flex-shrink: 0;
+      }
+
+      .item-name{
+        font-size: 1.5rem;
+      }
+
+      .item-description{
+        font-size: 1rem;
+      }
+
+      .section-title{
+        font-size: 1.625rem;
+      }
+
+      .wine-tree-title, .reco-title{
+        font-size: 1.5rem;
       }
     }
 
@@ -1053,6 +1121,78 @@
     let allMenuData = [], wineData = [], currentTab = 'now', isSearching = false, searchTimeout;
     let wineTreeStep = 0, wineTreeSelections = {}, showingWineList = false;
     let lastQuery = '', lastSearchResults = [], placeholderInterval;
+
+    // === CONFIGURATION DE L'ORDRE DES SECTIONS PAR ONGLET ===
+    // Définit l'ordre d'affichage logique des sections pour chaque onglet
+    // Les sections non listées seront triées alphabétiquement en fin de liste
+    const SECTION_ORDER = {
+      deguster: {
+        'Apéritifs': 1,
+        'Amuse-bouche': 2,
+        'Amuse-gueule': 3,
+        'Entrées': 4,
+        'Entrées froides': 5,
+        'Entrées chaudes': 6,
+        'Poissons': 7,
+        'Viandes blanches': 8,
+        'Plats': 9,
+        'Viandes': 10,
+        'Viandes rouges': 11,
+        'Fromages': 12,
+        'Pré-desserts': 13,
+        'Desserts': 14,
+        'Mignardises': 15
+      },
+      cocktails: {
+        'Signatures': 1,
+        'Signature': 2,
+        'Classiques': 3,
+        'Avec alcool': 4,
+        'Sans alcool': 5,
+        'Mocktails': 6
+      },
+      bieres: {
+        'Pression': 1,
+        'Bouteilles': 2,
+        'Artisanales': 3,
+        'Locales': 4
+      },
+      softs: {
+        'Jus frais': 1,
+        'Sodas': 2,
+        'Limonades': 3,
+        'Eaux': 4
+      },
+      chaudes: {
+        'Cafés': 1,
+        'Thés': 2,
+        'Infusions': 3,
+        'Chocolats': 4
+      }
+    };
+
+    // Fonction pour obtenir l'ordre de tri d'une section
+    const getSectionOrder = (tabName, sectionName) => {
+      const tabOrder = SECTION_ORDER[tabName];
+      if (!tabOrder) return Number.MAX_SAFE_INTEGER; // Sections d'onglets non configurés en dernier
+      const order = tabOrder[sectionName];
+      return order !== undefined ? order : Number.MAX_SAFE_INTEGER; // Sections non configurées en dernier
+    };
+
+    // Fonction pour trier les sections selon la configuration
+    const sortSections = (sectionsArray, tabName) => {
+      return sectionsArray.sort((a, b) => {
+        const orderA = getSectionOrder(tabName, a[0]);
+        const orderB = getSectionOrder(tabName, b[0]);
+
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+
+        // Si même ordre (ou les deux non configurés), tri alphabétique
+        return a[0].localeCompare(b[0], 'fr', { sensitivity: 'base' });
+      });
+    };
 
     const normalize = (s='') => s.toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
     const tabIdFromOnglet = (s='') => normalize(s).replace(/\s/g,'');
@@ -1799,9 +1939,14 @@
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(it);
       }
-      for (const [section, items] of groups){
+
+      // Tri des sections par ordre logique selon l'onglet d'origine
+      const sortedSections = sortSections(Array.from(groups.entries()), 'now');
+
+      for (const [section, items] of sortedSections){
         html += `<h2 class="section-title">${section}</h2>`;
-        items.sort(byNameFR).forEach(it => { html += createItemHTML(it); });
+        // Tri par prix dans chaque section
+        items.sort(compareWineByPrice).forEach(it => { html += createItemHTML(it); });
       }
       el.innerHTML = html;
     };
@@ -1809,7 +1954,7 @@
     const renderTab = (tabName) => {
       if (tabName === 'now') return renderNow();
       if (tabName === 'vins') return renderWineTree();
-      
+
       const el = panels[tabName]; if (!el) return;
       const tabItems = allMenuData.filter(i => tabIdFromOnglet(i.Onglet) === tabName);
       if (!tabItems.length){
@@ -1822,10 +1967,15 @@
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(it);
       }
+
+      // Tri des sections par ordre logique selon l'onglet
+      const sortedSections = sortSections(Array.from(groups.entries()), tabName);
+
       let html = '';
-      for (const [section, items] of groups){
+      for (const [section, items] of sortedSections){
         html += `<h2 class="section-title">${section}</h2>`;
-        items.sort(byNameFR).forEach(it => { html += createItemHTML(it); });
+        // Tri par prix dans chaque section
+        items.sort(compareWineByPrice).forEach(it => { html += createItemHTML(it); });
       }
       el.innerHTML = html;
     };
@@ -1960,10 +2110,14 @@
         groups.get(key).push(item);
       }
 
+      // Tri des sections par ordre logique (utilise l'onglet courant)
+      const sortedSections = sortSections(Array.from(groups.entries()), currentTab);
+
       let html = '';
-      for (const [section, items] of groups) {
+      for (const [section, items] of sortedSections) {
         html += `<h2 class="section-title">${section}</h2>`;
-        items.sort(byNameFR).forEach(item => { html += createItemHTML(item); });
+        // Tri par prix dans les résultats de recherche aussi
+        items.sort(compareWineByPrice).forEach(item => { html += createItemHTML(item); });
       }
       activePanel.innerHTML = html;
     };
