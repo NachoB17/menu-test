@@ -291,14 +291,15 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      background: linear-gradient(180deg, var(--cream) 0%, var(--warm-white) 100%);
+      background: rgba(250, 248, 244, 0.95);
       border-bottom: 1px solid rgba(26, 46, 37, 0.1);
       gap: var(--space-xs);
-      padding: var(--space-lg);
+      padding: var(--space-md);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .tab-btn{
@@ -334,7 +335,7 @@
     /* Tab Content */
     .tab-content{
       display: none;
-      padding: var(--space-2xl) var(--space-xl);
+      padding: var(--space-xl) var(--space-lg);
       background: transparent;
       min-height: 420px;
     }
@@ -343,46 +344,24 @@
       display: block;
     }
 
-    /* Menu Items - DESIGN PREMIUM REFAIT (Cards Élégantes) */
+    /* Menu Items - LIGNES COMPACTES (prix à droite) */
     .menu-item{
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: var(--space-lg);
-      padding: var(--space-xl) var(--space-lg);
-      background: var(--warm-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card);
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(26, 46, 37, 0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .menu-item::before{
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: linear-gradient(180deg, var(--soft-gold), var(--bronze));
-      opacity: 0;
-      transition: opacity 0.35s ease;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid rgba(26, 46, 37, 0.08);
+      transition: all 0.2s ease;
     }
 
     .menu-item:hover{
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px) scale(1.01);
-      border-color: rgba(197, 183, 143, 0.2);
+      padding-left: var(--space-xs);
+      border-bottom-color: rgba(197, 183, 143, 0.3);
     }
 
-    .menu-item:hover::before{
-      opacity: 1;
-    }
-
-    .menu-item + .menu-item{
-      margin-top: var(--space-lg);
+    .menu-item:last-child{
+      border-bottom: none;
     }
 
     .item-info{
@@ -391,81 +370,65 @@
     }
 
     .item-name{
-      font-size: 1.75rem;
+      font-size: 1.125rem;
       font-weight: 500;
       color: var(--text-primary);
-      letter-spacing: 0.01em;
-      line-height: 1.3;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      margin-bottom: var(--space-xs);
+      margin-bottom: 0;
     }
 
     .item-section{
-      font-size: 0.8125rem;
+      font-size: 0.6875rem;
       color: var(--bronze);
-      margin-bottom: var(--space-sm);
+      margin: var(--space-xs) 0;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 1;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
     }
 
     .item-description{
-      font-size: 1.0625rem;
+      font-size: 0.875rem;
       color: var(--text-secondary);
-      font-style: normal;
-      margin-top: var(--space-sm);
-      line-height: 1.75;
+      font-style: italic;
+      margin-top: var(--space-xs);
+      line-height: 1.5;
       font-weight: 400;
     }
 
     .item-price{
-      font-size: 1.375rem;
-      color: var(--deep-sage);
+      font-size: 1rem;
+      color: var(--text-primary);
       font-weight: 600;
-      background: linear-gradient(135deg, rgba(197, 183, 143, 0.12) 0%, rgba(197, 183, 143, 0.06) 100%);
-      border-radius: var(--radius-md);
-      padding: var(--space-md) var(--space-lg);
-      min-width: 90px;
-      text-align: center;
-      border: 2px solid rgba(197, 183, 143, 0.25);
       white-space: nowrap;
       flex-shrink: 0;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      letter-spacing: 0.02em;
+      font-family: 'Inter', sans-serif;
     }
 
-    /* Section Titles - DESIGN ÉLÉGANT REFAIT */
+    /* Section Titles - Plus Compacts */
     .section-title{
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.75rem;
-      font-weight: 400;
+      font-size: 1.5rem;
+      font-weight: 500;
       color: var(--deep-sage);
-      margin: var(--space-3xl) 0 var(--space-2xl);
+      margin: var(--space-2xl) 0 var(--space-lg);
       text-align: center;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.03em;
       position: relative;
       text-transform: uppercase;
-    }
-
-    .section-title::before{
-      content: '✦';
-      display: block;
-      font-size: 1.25rem;
-      color: var(--soft-gold);
-      margin-bottom: var(--space-md);
-      opacity: 0.8;
     }
 
     .section-title::after{
       content: '';
       position: absolute;
-      bottom: -16px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 120px;
+      width: 60px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--soft-gold) 30%, var(--bronze) 70%, transparent);
+      background: linear-gradient(90deg, transparent, var(--soft-gold), transparent);
     }
 
     .section-title:first-child{
@@ -473,13 +436,13 @@
     }
 
     .now-title{
-      font-size: 2rem;
+      font-size: 1.25rem;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--sage-medium);
-      margin: 0 0 var(--space-2xl) 0;
+      margin: 0 0 var(--space-lg) 0;
       text-align: center;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
     }
 
@@ -855,9 +818,9 @@
     /* Responsive Design */
     @media (max-width: 768px){
       :root{
-        --space-xl: 2rem;
-        --space-2xl: 2.5rem;
-        --space-3xl: 3rem;
+        --space-lg: 1.5rem;
+        --space-xl: 1.75rem;
+        --space-2xl: 2rem;
       }
 
       .header-title{
@@ -889,46 +852,50 @@
       }
 
       main.container{
-        margin: var(--space-lg) var(--space-sm) var(--space-2xl);
+        margin: var(--space-md) var(--space-sm) var(--space-xl);
       }
 
       .tab-content{
-        padding: var(--space-xl) var(--space-md);
+        padding: var(--space-md);
+      }
+
+      .tab-nav{
+        padding: var(--space-sm);
+        gap: 0.375rem;
+      }
+
+      .tab-btn{
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
       }
 
       .menu-item{
-        flex-direction: column;
-        align-items: stretch;
-        gap: var(--space-md);
-        padding: var(--space-lg);
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        padding: var(--space-sm) 0;
       }
 
       .item-name{
-        font-size: 1.625rem;
+        font-size: 1.0625rem;
       }
 
       .item-description{
-        font-size: 1rem;
-        line-height: 1.7;
+        font-size: 0.8125rem;
+        line-height: 1.5;
       }
 
       .item-price{
-        align-self: flex-start;
-        font-size: 1.25rem;
-        padding: var(--space-sm) var(--space-md);
+        font-size: 0.9375rem;
       }
 
       .section-title{
-        font-size: 2rem;
-        margin: var(--space-2xl) 0 var(--space-xl);
-      }
-
-      .section-title::before{
-        font-size: 1rem;
+        font-size: 1.25rem;
+        margin: var(--space-xl) 0 var(--space-md);
       }
 
       .now-title{
-        font-size: 1.625rem;
+        font-size: 1.125rem;
       }
 
       .wine-card-header{
@@ -949,44 +916,33 @@
         justify-content: center;
       }
 
-      .tab-nav{
-        padding: var(--space-md);
-        gap: var(--space-xs);
-      }
-
-      .tab-btn{
-        font-size: 0.9375rem;
-        padding: var(--space-sm) var(--space-md);
-      }
-
       .wine-tree-title, .reco-title{
-        font-size: 1.625rem;
-      }
-
-      .question-title{
         font-size: 1.375rem;
       }
 
+      .question-title{
+        font-size: 1.125rem;
+      }
+
       .wine-option{
-        padding: var(--space-md) var(--space-lg);
-        min-height: 60px;
+        padding: var(--space-sm) var(--space-md);
+        min-height: 48px;
       }
 
       .wine-option-label{
-        font-size: 1.0625rem;
+        font-size: 0.9375rem;
       }
 
       .wine-option-desc{
-        font-size: 0.9375rem;
+        font-size: 0.8125rem;
       }
     }
 
     @media (max-width: 480px){
       :root{
-        --space-lg: 1.5rem;
-        --space-xl: 1.75rem;
-        --space-2xl: 2rem;
-        --space-3xl: 2.5rem;
+        --space-lg: 1.25rem;
+        --space-xl: 1.5rem;
+        --space-2xl: 1.75rem;
       }
 
       .header-title{
@@ -1005,12 +961,16 @@
       }
 
       main.container{
-        border-radius: var(--radius-lg);
-        margin: var(--space-md) var(--space-xs) var(--space-xl);
+        border-radius: var(--radius-md);
+        margin: var(--space-sm) 0.5rem var(--space-lg);
       }
 
       .tab-content{
-        padding: var(--space-lg) var(--space-sm);
+        padding: var(--space-sm);
+      }
+
+      .tab-nav{
+        padding: 0.5rem;
       }
 
       .search-row{
@@ -1018,39 +978,39 @@
       }
 
       .clear-btn{
-        padding: var(--space-md) var(--space-md);
+        padding: var(--space-sm);
         min-width: 44px;
         min-height: 44px;
         flex-shrink: 0;
       }
 
       .menu-item{
-        padding: var(--space-md);
+        padding: 0.625rem 0;
       }
 
       .item-name{
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
 
       .item-description{
-        font-size: 0.9375rem;
+        font-size: 0.8125rem;
       }
 
       .item-price{
-        font-size: 1.125rem;
+        font-size: 0.9375rem;
       }
 
       .section-title{
-        font-size: 1.75rem;
-        margin: var(--space-xl) 0 var(--space-lg);
+        font-size: 1.125rem;
+        margin: var(--space-lg) 0 var(--space-sm);
       }
 
       .now-title{
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
 
       .wine-tree-title, .reco-title{
-        font-size: 1.5rem;
+        font-size: 1.25rem;
       }
     }
 
@@ -1259,12 +1219,22 @@
       }
     };
 
-    // Fonction pour obtenir l'ordre de tri d'une section
+    // Fonction pour obtenir l'ordre de tri d'une section (avec normalisation)
     const getSectionOrder = (tabName, sectionName) => {
       const tabOrder = SECTION_ORDER[tabName];
-      if (!tabOrder) return Number.MAX_SAFE_INTEGER; // Sections d'onglets non configurés en dernier
-      const order = tabOrder[sectionName];
-      return order !== undefined ? order : Number.MAX_SAFE_INTEGER; // Sections non configurées en dernier
+      if (!tabOrder) return Number.MAX_SAFE_INTEGER;
+
+      // Normalise le nom de section pour matcher malgré casse/espaces
+      const normalizedName = normalize(sectionName);
+
+      // Cherche dans la config en normalisant aussi les clés
+      for (const [key, value] of Object.entries(tabOrder)) {
+        if (normalize(key) === normalizedName) {
+          return value;
+        }
+      }
+
+      return Number.MAX_SAFE_INTEGER; // Section non configurée
     };
 
     // Fonction pour trier les sections selon la configuration
