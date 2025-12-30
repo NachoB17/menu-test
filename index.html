@@ -1041,6 +1041,33 @@
       border-top: 1px solid rgba(26, 46, 37, 0.08);
       margin-top: var(--space-xl);
     }
+
+    .footer-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent-green);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(26, 46, 37, 0.15);
+    }
+
+    .footer-contact:hover {
+      background: var(--deep-green);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 46, 37, 0.25);
+    }
+
+    .footer-contact svg {
+      width: 18px;
+      height: 18px;
+    }
   </style>
 </head>
 <body>
@@ -1106,6 +1133,14 @@
   <footer class="footer">
     Prix net TTC & service compris<br>
     Pour toute information concernant les allergènes, veuillez vous renseigner auprès de notre équipe
+    <br><br>
+    <a href="mailto:contact@maison-fleurie.com" class="footer-contact">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+        <polyline points="22,6 12,13 2,6"></polyline>
+      </svg>
+      Nous contacter
+    </a>
   </footer>
 
   <!-- Back to Top Button -->
