@@ -13,6 +13,9 @@
   <meta property="og:image" content="https://raw.githubusercontent.com/NachoB17/menu-test/main/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- Préchargement Polyamine pour éviter le flash FOUC -->
+  <link rel="preload" href="./Polyamine.otf" as="font" type="font/otf" crossorigin />
+
   <!-- Inter pour le corps -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +31,7 @@
       src: url('./Polyamine.otf') format('opentype');
       font-weight: 400;
       font-style: normal;
-      font-display: swap;
+      font-display: block;
     }
 
     /* ─── DESIGN TOKENS ─── */
@@ -458,11 +461,11 @@
 
 <script>
 const SUPABASE_URL  = 'https://yctaoyxlfzmlzkwwjeti.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljdGFveXhsZnptbHprd3dqZXRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzMjUwMDIsImV4cCI6MjA1NTkwMTAwMn0.pA2nI9pjGAHIEzaXS38_vFNH4IFLR8c3Tlxj-EHMqI0';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljdGFveXhsZnptbHprd3dqZXRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDQyNzAsImV4cCI6MjA4NzE4MDI3MH0.VeufqlzIrDobaOZRmz-xt2Zda-6QVz0T2CFy_GvIdPw';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const CACHE_KEY = 'mf-menu-sb-v4';
-const CACHE_AT  = 'mf-menu-sb-at4';
+const CACHE_KEY = 'mf-menu-sb-v5';
+const CACHE_AT  = 'mf-menu-sb-at5';
 const CACHE_TTL = 15 * 60 * 1000;
 
 let allMenuData = [], wineData = [];
@@ -799,16 +802,16 @@ const setupScroll = () => {
   },{passive:true});
 };
 
-/* ── SPLASH — délai minimum 400ms ── */
+/* ── SPLASH — délai minimum 200ms ── */
 window._splashStart=Date.now();
 let _splashHidden=false;
 const hideSplash = () => {
   if(_splashHidden)return; _splashHidden=true;
   const s=qs('#splashScreen');
-  const delay=Math.max(0,400-(Date.now()-window._splashStart));
+  const delay=Math.max(0,200-(Date.now()-window._splashStart));
   setTimeout(()=>{s?.classList.add('fade-out');setTimeout(()=>{if(s)s.style.display='none';},500);},delay);
 };
-window.addEventListener('load',()=>setTimeout(hideSplash,4000));
+window.addEventListener('load',()=>setTimeout(hideSplash,800));
 
 /* ── PLACEHOLDER ── */
 const startPlaceholder = () => {
