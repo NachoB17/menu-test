@@ -53,7 +53,6 @@
       --border:       rgba(245,240,232,0.08);
       --border-dore:  rgba(172,175,125,0.22);
 
-      /* Polyamine pour tous les titres, Inter pour le corps */
       --font-title: 'Polyamine', Georgia, serif;
       --font-body:  'Inter', -apple-system, sans-serif;
 
@@ -231,6 +230,9 @@
     }
     .menu-item:hover::before { opacity: 1; }
     .item-info { flex: 1; min-width: 0; }
+    .item-name-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+    }
     .item-name {
       font-family: var(--font-title); font-size: 1.125rem; font-weight: 400;
       color: var(--creme); line-height: 1.3; letter-spacing: 0.02em;
@@ -242,6 +244,38 @@
     .item-price {
       font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
       color: var(--dore); white-space: nowrap; flex-shrink: 0; letter-spacing: 0.03em;
+    }
+
+    /* ─── PASTILLE RECOMMANDATION ─── */
+    .badge-reco {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-family: var(--font-body); font-size: 0.5625rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.2rem 0.55rem 0.2rem 0.45rem;
+      border-radius: 2px;
+      background: linear-gradient(135deg, rgba(172,175,125,0.18) 0%, rgba(172,175,125,0.08) 100%);
+      border: 1px solid var(--border-dore);
+      color: var(--dore);
+      white-space: nowrap;
+      flex-shrink: 0;
+      vertical-align: middle;
+      position: relative;
+      overflow: hidden;
+    }
+    .badge-reco::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(172,175,125,0.06) 50%, transparent 100%);
+      animation: badgeSheen 3s ease-in-out infinite;
+    }
+    .badge-reco-star {
+      width: 7px; height: 7px; flex-shrink: 0;
+      fill: var(--dore); opacity: 0.9;
+    }
+    @keyframes badgeSheen {
+      0%   { transform: translateX(-100%); }
+      60%  { transform: translateX(100%); }
+      100% { transform: translateX(100%); }
     }
 
     /* ─── EN CE MOMENT ─── */
@@ -405,8 +439,8 @@ const SUPABASE_URL  = 'https://yctaoyxlfzmlzkwwjeti.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljdGFveXhsZnptbHprd3dqZXRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDQyNzAsImV4cCI6MjA4NzE4MDI3MH0.VeufqlzIrDobaOZRmz-xt2Zda-6QVz0T2CFy_GvIdPw';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const CACHE_KEY = 'mf-menu-sb-v6';
-const CACHE_AT  = 'mf-menu-sb-at6';
+const CACHE_KEY = 'mf-menu-sb-v7';
+const CACHE_AT  = 'mf-menu-sb-at7';
 const CACHE_TTL = 15 * 60 * 1000;
 
 let allMenuData = [];
@@ -430,14 +464,20 @@ const byPrice = (a,b) => {
   return (a.nom||'').localeCompare(b.nom||'','fr',{sensitivity:'base'});
 };
 
+/* ─── PASTILLE RECOMMANDATION ─── */
+const BADGE_STAR = `<svg class="badge-reco-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></svg>`;
+const badgeReco = () => `<span class="badge-reco">${BADGE_STAR}Notre recommandation</span>`;
+
 /* ── RENDER ── */
 const DEGUSTER_ORDER=['veggie','terre','mer','fromages','charcuterie','dessert','desserts'];
 
-const itemHTML = item=>`
+const itemHTML = item => `
   <div class="menu-item">
     <div class="item-info">
-      <div class="item-name">${item.nom||''}</div>
-      ${item.description?`<div class="item-description">${item.description}</div>`:''}
+      <div class="item-name-row">
+        <span class="item-name">${item.nom||''}</span>${item.recommandation ? badgeReco() : ''}
+      </div>
+      ${item.description ? `<div class="item-description">${item.description}</div>` : ''}
     </div>
     <div class="item-price">${item.prix||''}</div>
   </div>`;
